@@ -8,13 +8,10 @@
 class BulletAlly : public ABullet {
 
 	private:
-
 	public:
 		BulletAlly( void );
-		~BulletAlly( void );
-
+		virtual ~BulletAlly( void );
+		virtual void clone();
 };
-
-
 
 #endif

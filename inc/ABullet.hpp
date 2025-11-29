@@ -5,10 +5,10 @@
 
 #include "AGameEntity.hpp"
 
-class ABullet : protected  AGameEntity {
+class ABullet : public AGameEntity {
 
-	private:
-
+	protected:
+		int	_damage;
 	public:
 		ABullet( void );
 		virtual void clone() = 0;

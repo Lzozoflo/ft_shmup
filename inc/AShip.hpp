@@ -8,7 +8,6 @@
 class AShip : public AGameEntity {
 
 	protected:
-		int	_hp;
 
 	public:
 		AShip( void );

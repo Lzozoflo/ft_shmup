@@ -10,8 +10,8 @@
 class AGameEntity {
 
 	protected:
-
 		t_type_AgameEntity _type;
+		int	_hp;
 
 	public:
 		AGameEntity( void );
