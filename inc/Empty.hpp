@@ -11,7 +11,8 @@ class Empty : public AGameEntity {
 
 	public:
 		Empty( void );
-		~Empty( void );
+		virtual void idk();
+		virtual ~Empty( void );
 
 };
 

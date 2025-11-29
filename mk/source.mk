@@ -38,17 +38,18 @@ HEADERS				:=		Debug.hpp
 
 
 SRC					:=		main.cpp		\
-							AGamkeEntity.cpp
+							AGameEntity.cpp	\
+							Empty.cpp
 
 
 SRC_UTILS			:=		Debug.cpp
 
 SRC_SHIP			:=		AShip.cpp		\
-							Shipally.cpp	\
+							ShipAlly.cpp	\
 							ShipEnnemie.cpp
 
 SRC_BULLET			:=		ABullet.cpp		\
-							Bulletally.cpp	\
+							BulletAlly.cpp	\
 							BulletEnnemie.cpp
 
 

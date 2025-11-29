@@ -5,13 +5,13 @@
 
 #include "AGameEntity.hpp"
 
-class ABullet : public AGameEntity {
+class ABullet : protected  AGameEntity {
 
 	private:
 
 	public:
 		ABullet( void );
-		virtual void idk() = 0;
+		virtual void clone() = 0;
 		virtual ~ABullet( void );
 
 };
