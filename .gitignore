@@ -1,11 +1,9 @@
-fr.subject.pdf
 en.subject.pdf
-clean_Canonical_dir
 .vscode
-btc
-RPN
-PmergeMe
 */cpp
 */.objs
 */.deps
+.objs
+.deps
 error
+ft_shmup
