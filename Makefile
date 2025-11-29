@@ -56,6 +56,7 @@ creat_dir 		:
 
 
 $(OBJS_DIR)%.o : $(SRC_DIR)%.cpp Makefile | creat_dir
+	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 	@mv $(basename $@).d $(DEPS_DIR)
 
