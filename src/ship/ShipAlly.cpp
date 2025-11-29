@@ -9,7 +9,6 @@ ShipAlly::ShipAlly( void ) : AShip() {
 
 
 AGameEntity *ShipAlly::clone(void){
-    Debug::add_debug_nl("clone shipally");
     return new ShipAlly();
 }
 

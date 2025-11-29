@@ -85,6 +85,8 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
             // down
             break;
         case SHIPALLY:{
+            if (Board[y][x]->getHp() < 1)
+                break;
             ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
             if (ptr == NULL)
                 Debug::add_debug_nl("aled y pb la");

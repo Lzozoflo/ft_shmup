@@ -10,7 +10,8 @@
 #include "ShipAlly.hpp"
 #include "struct.hpp"
 
-#define FPS30   32000// limit 60 fps 
+#define FPS6   160000// limit 6 fps 
+#define FPS30   32000// limit 30 fps 
 #define FPS60   16000// limit 60 fps 
 #define FPS120   8000// limit 120 fps 
 #define RUN	    1
@@ -91,7 +92,7 @@ int main(int ac, char **av) {
 
 
         wrefresh(win);                              // Rafraîchir la fenêtre
-        usleep(FPS30);                              // fps limiter 
+        usleep(FPS6);                              // fps limiter 
     }
 
     delete_all_board(Board, game);
