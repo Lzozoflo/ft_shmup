@@ -4,7 +4,6 @@
 
 #include "Debug.hpp"
 #include "AGameEntity.hpp"
-#include "Empty.hpp"
 #include "ShipAlly.hpp"
 #include "struct.hpp"
 
@@ -91,8 +90,9 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
         }
         case SHIPALLY:{
 
-            // if (Board[y][x]->getHp() < 1)
-            //     break;  // dead so dont copy
+            if (Board[y][x]->getHp() < 1)
+                break;  // dead so dont copy
+            
             ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
             if (ptr == NULL)
                 Debug::add_debug_nl("aled y pb la");

@@ -6,7 +6,6 @@
 
 #include "Debug.hpp"
 #include "AGameEntity.hpp"
-#include "Empty.hpp"
 #include "ShipAlly.hpp"
 #include "struct.hpp"
 

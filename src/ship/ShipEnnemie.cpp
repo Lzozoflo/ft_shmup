@@ -7,3 +7,5 @@ ShipEnnemie::ShipEnnemie(int hp) : AShip(SHIPENNEMIE, hp) {}
 AGameEntity *ShipEnnemie::clone(void){
     return new ShipEnnemie(this->_hp);
 }
+
+ShipEnnemie::~ShipEnnemie( void ) {}
