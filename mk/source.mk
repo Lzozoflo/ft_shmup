@@ -39,7 +39,6 @@ HEADERS				:=		Debug.hpp
 
 SRC					:=		main.cpp		\
 							AGameEntity.cpp	\
-							Empty.cpp
 
 
 SRC_UTILS			:=		Board.cpp		\

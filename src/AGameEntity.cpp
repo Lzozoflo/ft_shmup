@@ -14,3 +14,7 @@ char	AGameEntity::getType() const {
 void	AGameEntity::setType(t_type_AgameEntity type) {
     this->_type = type;
 }
+
+int AGameEntity::getHp() const {
+    return this->_hp;
+}
