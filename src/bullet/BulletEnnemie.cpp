@@ -8,5 +8,5 @@ BulletEnnemie::BulletEnnemie(int damage, int hp) : ABullet(BULLETENNEMIE, hp, da
 BulletEnnemie::~BulletEnnemie( void ){}
 
 AGameEntity * BulletEnnemie::clone(void){
-    return NULL;
+    return new BulletEnnemie(this->getDamage(), this->getHp());
 }

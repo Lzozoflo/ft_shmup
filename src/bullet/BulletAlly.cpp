@@ -7,6 +7,6 @@ BulletAlly::BulletAlly(int damage, int hp) : ABullet(BULLETALLY, hp, damage) {}
 
 BulletAlly::~BulletAlly( void ) {}
 
-AGameEntity * BulletAlly::clone(void){
-    return NULL;
+AGameEntity * BulletAlly::clone( void ){
+    return new BulletAlly(this->getDamage(), this->getHp());
 }
