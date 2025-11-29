@@ -25,6 +25,8 @@ typedef struct s_game
     int posPlayerX;
     int posPlayerY;
     std::vector<std::vector<AGameEntity *> > newBoard;
+	int nbEnnemie;
+	int maxEnnemie;
 } t_game;
 
 

@@ -9,12 +9,14 @@
 #include "ShipAlly.hpp"
 #include "struct.hpp"
 
-#define FPS6   160000// limit 6 fps 
-#define FPS30   32000// limit 30 fps 
-#define FPS60   16000// limit 60 fps 
-#define FPS120   8000// limit 120 fps 
+#define GAMEOVER    3000000// dead screen loser
+#define FPS6        160000// limit 6 fps 
+#define FPS30       32000// limit 30 fps 
+#define FPS60       16000// limit 60 fps 
+#define FPS120      8000// limit 120 fps 
 #define RUN	    1
 #define EXIT	0
+
 
 
 void null_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
@@ -49,6 +51,8 @@ int main(int ac, char **av) {
 
     game.height -= 4;
     game.width -= 4;
+    game.maxEnnemie = game.width >> 1;
+    game.nbEnnemie = 0;
 	
     // Debug::add_debug_nl("taille de la windown - height: ", height);
 	// Debug::add_debug_nl("taille de la windown - width: ", width);
@@ -72,6 +76,7 @@ int main(int ac, char **av) {
 
         werase(win);                                // Effacer l'intérieur de la fenêtre
         box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
+        // mvwprintw(stdscr, 1, 1, "comme ca");
 
         int ch = getch();
 
@@ -86,12 +91,26 @@ int main(int ac, char **av) {
         else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
         else if (ch == ' ')                                             Debug::add_debug_nl("piou paw");
 
-        iter_board(Board, game);
+        try
+        {
+            iter_board(Board, game);
+        }
+        catch(const int &i)
+        {
+            if (i == -42) {
+                mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
+                wrefresh(win);
+                usleep(3000000);
+            }
+            delete_all_board(game.newBoard, game);
+            break;
+        }
+        
         print_all_board(Board, game, win);
 
 
         wrefresh(win);                              // Rafraîchir la fenêtre
-        usleep(FPS120);                              // fps limiter 
+        usleep(FPS60);                              // fps limiter 
     }
 
     delete_all_board(Board, game);

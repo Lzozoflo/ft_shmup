@@ -3,7 +3,7 @@
 #include "AShip.hpp"
 #include "Debug.hpp"
 
-ShipAlly::ShipAlly( void ) : AShip(SHIPALLY, 1) {}
+ShipAlly::ShipAlly( void ) : AShip(SHIPALLY, 10) {}
 
 ShipAlly::ShipAlly(int hp) : AShip(SHIPALLY, hp) {}
 

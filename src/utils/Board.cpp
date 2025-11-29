@@ -5,6 +5,7 @@
 #include "Debug.hpp"
 #include "AGameEntity.hpp"
 #include "ShipAlly.hpp"
+#include "ShipEnnemie.hpp"
 #include "struct.hpp"
 
 
@@ -19,10 +20,14 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game )
     for (int y = 0; y < game.height; ++y) {
         Board[y].resize(game.width);
         for (int x = 0; x < game.width; ++x) {
-            if (game.posPlayerX == x && game.posPlayerY == y)
+            if (game.posPlayerX == x && game.posPlayerY == y){
                 Board[y][x] = new ShipAlly();
-            else
+            }  else {
                 Board[y][x] = NULL;  
+            }
+            // if (y == 1 && !Board[y][x]) {
+            //     Board[y][x] = new ShipEnnemie();
+            // }
         }
     }
 }
@@ -73,6 +78,7 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
     }
 }
 
+
 void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
     switch (Board[y][x]->getType())
     {
@@ -91,8 +97,8 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
         case SHIPALLY:{
 
             if (Board[y][x]->getHp() < 1)
-                break;  // dead so dont copy
-            
+                throw(-42);  // dead so dont copy
+            // Board[y][x]->takeDamage(1);
             ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
             if (ptr == NULL)
                 Debug::add_debug_nl("aled y pb la");
@@ -100,6 +106,15 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
             break;
         }
         case SHIPENNEMIE:{
+            if (Board[y][x]->getHp() < 1){
+                game.nbEnnemie--;
+                break;
+            }
+                
+            ShipEnnemie *ptr = dynamic_cast<ShipEnnemie *>(Board[y][x]);
+            if (ptr == NULL)
+                Debug::add_debug_nl("aled y pb la");
+            game.newBoard[y][x] = ptr->clone();
             // ia rand for move and hit
             break;
         }
@@ -108,12 +123,23 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
     }
 }
 
+#include <cstdlib>
+
 void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
+    static int iter = 20;
+    int random = std::rand() % game.width;
 
     for (int y = 0; y < game.height; ++y) {
         for (int x = 0; x < game.width; ++x) {
             if (Board[y][x]){
-                all_case(Board, game, y, x);
+               all_case(Board, game, y, x);
+            }
+            if (y == 1 && !Board[y][x] && random == x && iter-- == 0) {
+                if (game.nbEnnemie == game.maxEnnemie)
+                    continue;
+                iter = 20;
+                game.nbEnnemie++;
+                game.newBoard[y][x] = new ShipEnnemie();
             }
         }
     }
