@@ -21,8 +21,10 @@ Debug::Debug( std::string str ) {
     this->_debug = true;
 
     this->_debugfile.open(str.c_str());
+
+    this->_debugfile << "Years-month-day - hour-min-sec.\n\n";
     this->_add_time();
-    this->_debugfile << "Debug start.\n";
+    this->_debugfile << "Debug start.\n\n";
 }
 
 void Debug::_add_time( void ) {
@@ -33,7 +35,7 @@ void Debug::_add_time( void ) {
 
     Debug::_debugfile   << (1900 + info->tm_year) << "-"
                         << (1 + info->tm_mon)  << "-"
-                        << info->tm_mday << " "
+                        << info->tm_mday << " - "
                         << info->tm_hour << "-"
                         << info->tm_min << "-"
                         << info->tm_sec << " ";
@@ -91,8 +93,6 @@ void Debug::add_debug_nl( int value ){
 void Debug::add_nl( void ){
     if (!Debug::check_debug_on())
         return;
-    if (Debug::_nl)
-        Debug::_add_time();
     Debug::_debugfile << "\n";
     Debug::_nl = true;
 }

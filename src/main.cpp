@@ -6,7 +6,9 @@
 #include "Windown.hpp"
 #include "Debug.hpp"
 
-
+#define FPS30   32000// limit 60 fps 
+#define FPS60   16000// limit 60 fps 
+#define FPS120   8000// limit 120 fps 
 #define RUN	    1
 #define EXIT	0
 
@@ -40,8 +42,8 @@ int main(int ac, char **av) {
     int h, w;
     getmaxyx(stdscr, h, w);
 
-	Debug::add_debug_nl("h: ", h);
-	Debug::add_debug_nl("w: ", w);
+	Debug::add_debug_nl("taille de la windown - h: ", h);
+	Debug::add_debug_nl("taille de la windown - w: ", w);
     
     // Création de la fenêtre au centre.
     int starty = (h - (h - 4)) >> 1;
@@ -58,34 +60,30 @@ int main(int ac, char **av) {
 
     while (is_running) {
 
+        werase(win);                                // Effacer l'intérieur de la fenêtre
+        box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
+
         int ch = getch();
-        if (ch == 'q'|| ch == 27){
-            is_running = EXIT;
-        }
 
-        Debug::add_debug_nl("ch: ", ch);
+        Debug::add_debug_nl(" Input - ch: ", ch);
 
-        if (ch == KEY_LEFT && x > 1) x--;
-        else if (ch == KEY_RIGHT && x < w - 6) x++;
-        else if (ch == KEY_UP && y > 1) y--;
-        else if (ch == KEY_DOWN && y < h - 6) y++;
+        // all input search esc/q(to quit), up, down, right, left,
+        if (ch == 'q'|| ch == 27)                   is_running = EXIT;
+        else if (ch == KEY_LEFT && x > 1)           x--;
+        else if (ch == KEY_RIGHT && x < w - 6)      x++;
+        else if (ch == KEY_UP && y > 1)             y--;
+        else if (ch == KEY_DOWN && y < h - 6)       y++;
 
-        // Effacer l'intérieur de la fenêtre (PAS la bordure)
-        werase(win);
-        box(win, 0, 0);
+        //a terme ici print board (tab[h-4][w-4])
+        mvwprintw(win, y, x, "A");                  // Affiche le joueur dans la fenêtre
 
-        // Afficher ton joueur dans la fenêtre
-        mvwprintw(win, y, x, "A");
-
-        // Rafraîchir la fenêtre
-        wrefresh(win);
-
-        usleep(16000); // limit 60 fps 16000
+        
+        wrefresh(win);                              // Rafraîchir la fenêtre
+        usleep(FPS30);                              // fps limiter 
     }
 
     delwin(win);
     endwin();
-
 	delete ptr;
     return 0;
 }
