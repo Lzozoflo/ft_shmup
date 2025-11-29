@@ -19,7 +19,7 @@ class Windown {
 	private:
 
 	public:
-		Windown(int ac, char **av);
+		Windown( void );
 		~Windown( void );
 
 };

@@ -30,11 +30,13 @@ HEADERS_DIR			:=		./inc/
 HEADERS_D			:=		./incs/
 
 
-HEADERS				:=		Windown.hpp
+HEADERS				:=		Windown.hpp		\
+							Debug.hpp
 
 
 
 SRC					:=		Windown.cpp		\
+							Debug.cpp		\
 							main.cpp
 
 

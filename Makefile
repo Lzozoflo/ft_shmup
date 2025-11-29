@@ -11,7 +11,7 @@
 
 CC					=		c++
 INCLUDES			=		-I$(HEADERS_DIR)
-CPPFLAGS			=		-Wall -Werror -Wextra -std=c++98 $(INCLUDES) -g3
+CPPFLAGS			=		-Wall -Werror -Wextra -std=c++98 $(INCLUDES) -g3 
 CPPFLAGSS			=		-Weverything						 -Wno-padded -Wno-documentation-unknown-command -Wno-documentation -std=c++98 $(INCLUDES)
 NPD					=		--no-print-directory
 MAKE				:=		$(MAKE) -j $(NPD)
@@ -46,7 +46,7 @@ all					:		$(NAME)
 
 
 $(NAME)				:		$(OBJS)
-		$(CC) $^ $(CPPFLAGS) -o $(NAME)
+		$(CC) $^ $(CPPFLAGS) -o $(NAME) -lncurses
 
 
 
