@@ -8,6 +8,7 @@
 
 std::ofstream Debug::_debugfile;
 bool Debug::_debug = false;
+bool Debug::_nl = true;
 
 Debug::~Debug( void ) {
     this->_debugfile.close();
@@ -45,13 +46,53 @@ bool Debug::check_debug_on(){
 void Debug::add_debug( std::string str ){
     if (!Debug::check_debug_on())
         return;
-    Debug::_add_time();
-    Debug::_debugfile << str << "\n";
+    if (Debug::_nl)
+        Debug::_add_time();
+    Debug::_debugfile << str;
+    Debug::_nl = false;
 }
 
 void Debug::add_debug( int value ){
     if (!Debug::check_debug_on())
         return;
-    Debug::_add_time();
+    if (Debug::_nl)
+        Debug::_add_time();
+    Debug::_debugfile << value;
+    Debug::_nl = false;
+}
+
+void Debug::add_debug_nl( std::string str , int value ){
+    if (!Debug::check_debug_on())
+        return;
+    if (Debug::_nl)
+        Debug::_add_time();
+    Debug::_debugfile << str << value << "\n";
+    Debug::_nl = true;
+}
+
+void Debug::add_debug_nl( std::string str ){
+    if (!Debug::check_debug_on())
+        return;
+    if (Debug::_nl)
+        Debug::_add_time();
+    Debug::_debugfile << str << "\n";
+    Debug::_nl = true;
+}
+
+void Debug::add_debug_nl( int value ){
+    if (!Debug::check_debug_on())
+        return;
+    if (Debug::_nl)
+        Debug::_add_time();
     Debug::_debugfile << value << "\n";
+    Debug::_nl = true;
+}
+
+void Debug::add_nl( void ){
+    if (!Debug::check_debug_on())
+        return;
+    if (Debug::_nl)
+        Debug::_add_time();
+    Debug::_debugfile << "\n";
+    Debug::_nl = true;
 }
