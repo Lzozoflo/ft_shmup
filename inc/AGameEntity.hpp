@@ -5,19 +5,7 @@
 
 
 #include <string>
-
-typedef enum e_type_AGameEntity
-{
-	UNKNOWN = 0,
-	EMPTY = 32,			// ' '
-	BULLET = 48, 		// 0
-	BULLETALLY = 42, 	// *
-	BULLETENNEMIE = 43,	// +
-	SHIP = 49,			// 1
-	SHIPALLY = 65,		// A
-	SHIPENNEMIE = 86,	// V
-} t_type_AgameEntity;
-
+#include "struct.hpp"
 
 class AGameEntity {
 

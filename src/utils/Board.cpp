@@ -6,23 +6,24 @@
 #include "AGameEntity.hpp"
 #include "Empty.hpp"
 #include "ShipAlly.hpp"
+#include "struct.hpp"
 
-void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width ) {
+void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 
     Board.clear();
-    Board.resize(height);
+    Board.resize(game.height);
 
     // Position du "joueur" à l'intérieur de la fenêtre
-    int baseposx = width >> 1;
-    int baseposy = height - 2;
+    int baseposx = game.width >> 1;
+    int baseposy = game.height - 2;
 
-	// Debug::add_debug_nl("int baseposx = width >> 1: ", baseposx);
-	// Debug::add_debug_nl("int baseposy = height - 2: ", baseposy);
+	// Debug::add_debug_nl("int baseposx = game.width >> 1: ", baseposx);
+	// Debug::add_debug_nl("int baseposy = game.height - 2: ", baseposy);
 
-    for (int y = 0; y < height; ++y) {
-        Board[y].resize(width);
+    for (int y = 0; y < game.height; ++y) {
+        Board[y].resize(game.width);
 
-        for (int x = 0; x < width; ++x) {
+        for (int x = 0; x < game.width; ++x) {
             if (baseposx == x && baseposy == y)
                 Board[y][x] = new ShipAlly(); // alloue un pointeur pour chaque case
             else
@@ -31,31 +32,34 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, in
     }
 }
 
-void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width, WINDOW *win) {
-    std::string s;
+void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win) {
+    game.height--;
+    game.width--;
+    for (int y = 1; y < game.height; ++y) {
 
-    height--;
-    width--;
-    for (int y = 1; y < height; ++y) {
-
-        for (int x = 1; x < width; ++x) {
-            if (Board[y][x]) {
-                s = Board[y][x]->getType();                                // alloue un pointeur pour chaque case
-                mvwprintw(win, y, x, "%s",s.c_str());                           // Affiche le joueur dans la fenêtre
+        for (int x = 1; x < game.width; ++x) {
+            if (Board[y][x]) {                        // alloue un pointeur pour chaque case
+                mvwprintw(win, y, x, "%c", Board[y][x]->getType());          // Affiche le joueur dans la fenêtre
             } else {
                 mvwprintw(win, y, x, " ");
             }
         }
     }
+    game.height++;
+    game.width++;
 }
 
-void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width ) {
+void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 
-    for (int y = 0; y < height; ++y) {
+    for (int y = 0; y < game.height; ++y) {
 
-        for (int x = 0; x < width; ++x) {
+        for (int x = 0; x < game.width; ++x) {
             if (Board[y][x])
                 delete Board[y][x];  // alloue un pointeur pour chaque case
         }
     }
 }
+
+// void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
+//     std::vector<std::vector<AGameEntity *> > &Board
+// }

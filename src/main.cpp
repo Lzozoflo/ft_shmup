@@ -8,6 +8,7 @@
 #include "AGameEntity.hpp"
 #include "Empty.hpp"
 #include "ShipAlly.hpp"
+#include "struct.hpp"
 
 #define FPS30   32000// limit 60 fps 
 #define FPS60   16000// limit 60 fps 
@@ -15,18 +16,10 @@
 #define RUN	    1
 #define EXIT	0
 
-typedef struct s_game
-{
-    int height;
-    int width;
-    int posPlayerX;
-    int posPlayerY;
-} t_game;
 
-
-void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width );
-void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width, WINDOW *win);
-void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width );
+void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
+void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win);
+void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 
 int main(int ac, char **av) {
 
@@ -67,7 +60,7 @@ int main(int ac, char **av) {
     game.posPlayerY = game.height - 2;
 
     std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
-    fill_board(Board, game.height, game.width);   // init du Board + Pos de base du joueur
+    fill_board(Board, game);     // init du Board + Pos de base du joueur
 
     while (is_running) {
 
@@ -82,12 +75,13 @@ int main(int ac, char **av) {
         // all input search esc/q(to quit), up, down, right, left,
         if (ch == 'q'|| ch == 27)                                       is_running = EXIT;
         else if (ch == KEY_LEFT && game.posPlayerX > 1)                 game.posPlayerX--;
-        else if (ch == KEY_RIGHT && game.posPlayerX < game.width - 6)   game.posPlayerX++;
+        else if (ch == KEY_RIGHT && game.posPlayerX < game.width - 2)   game.posPlayerX++;
         else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
-        else if (ch == KEY_DOWN && game.posPlayerY < game.height - 6)   game.posPlayerY++;
+        else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
+        else if (ch == ' ')                                             Debug::add_debug_nl("piou paw");
 
 
-        print_all_board(Board, game.height, game.width, win);
+        print_all_board(Board, game, win);
 
         // mvwprintw(win, y, x, "A");                  // Affiche le joueur dans la fenêtre
 
@@ -96,8 +90,7 @@ int main(int ac, char **av) {
         usleep(FPS30);                              // fps limiter 
     }
 
-
-    delete_all_board(Board, game.height, game.width);
+    delete_all_board(Board, game);
     delwin(win);
     endwin();
     if (ptr != NULL)
