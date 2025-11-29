@@ -76,12 +76,6 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
 
 
 void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
-    static int posPlayerX = game.posPlayerX;
-    static int posPlayerY = game.posPlayerY;
-    (void)posPlayerX;
-    (void)posPlayerY;
-
-    (void)game.newBoard;
     switch (Board[y][x]->getType())
     {
         case BULLETALLY:
@@ -91,14 +85,10 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
             // down
             break;
         case SHIPALLY:{
-
             ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
             if (ptr == NULL)
                 Debug::add_debug_nl("aled y pb la");
-            if (posPlayerX != game.posPlayerX || posPlayerY != game.posPlayerY) {
-                game.newBoard[game.posPlayerY][game.posPlayerX] = ptr->clone();
-            }
-            // check pos change
+            game.newBoard[game.posPlayerY][game.posPlayerX] = ptr->clone();
             break;
         }
         case SHIPENNEMIE:

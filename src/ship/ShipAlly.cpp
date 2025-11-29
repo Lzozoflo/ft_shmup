@@ -1,6 +1,7 @@
 
 #include "ShipAlly.hpp"
 #include "AShip.hpp"
+#include "Debug.hpp"
 
 ShipAlly::ShipAlly( void ) : AShip() {
     this->setType(SHIPALLY);
@@ -8,7 +9,8 @@ ShipAlly::ShipAlly( void ) : AShip() {
 
 
 AGameEntity *ShipAlly::clone(void){
-    return NULL;
+    Debug::add_debug_nl("clone shipally");
+    return new ShipAlly();
 }
 
 
