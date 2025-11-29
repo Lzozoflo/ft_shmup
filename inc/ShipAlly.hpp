@@ -11,7 +11,7 @@ class ShipAlly : public AShip {
 
 	public:
 		ShipAlly( void );
-		virtual void idk();
+		virtual void clone();
 		~ShipAlly( void );
 
 };

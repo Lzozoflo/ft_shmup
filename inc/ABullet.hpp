@@ -13,7 +13,6 @@ class ABullet : public AGameEntity {
 		ABullet( void );
 		virtual void clone() = 0;
 		virtual ~ABullet( void );
-
 };
 
 

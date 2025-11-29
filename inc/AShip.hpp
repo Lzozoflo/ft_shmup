@@ -11,9 +11,8 @@ class AShip : public AGameEntity {
 
 	public:
 		AShip( void );
-		virtual void idk() = 0;
+		virtual void clone() = 0;
 		virtual ~AShip( void );
-
 };
 
 
