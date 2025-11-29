@@ -92,7 +92,7 @@ int main(int ac, char **av) {
 
 
         wrefresh(win);                              // Rafraîchir la fenêtre
-        usleep(FPS6);                              // fps limiter 
+        usleep(FPS120);                              // fps limiter 
     }
 
     delete_all_board(Board, game);

@@ -74,28 +74,35 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
     }
 }
 
-
 void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
     switch (Board[y][x]->getType())
     {
-        case BULLETALLY:
+        case BULLETALLY:{
             // up
+            if ((y - 1) > 1 && !Board[y - 1][x])
+                Debug::add_debug_nl("bullet up");
             break;
-        case BULLETENNEMIE:
+        }
+        case BULLETENNEMIE:{
             // down
+            if ((y + 1) < (game.height - 2) && Board[y + 1][x])
+                Debug::add_debug_nl("bullet down");
             break;
+        }
         case SHIPALLY:{
-            if (Board[y][x]->getHp() < 1)
-                break;
+
+            // if (Board[y][x]->getHp() < 1)
+            //     break;  // dead so dont copy
             ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
             if (ptr == NULL)
                 Debug::add_debug_nl("aled y pb la");
             game.newBoard[game.posPlayerY][game.posPlayerX] = ptr->clone();
             break;
         }
-        case SHIPENNEMIE:
+        case SHIPENNEMIE:{
             // ia rand for move and hit
             break;
+        }
         default:
             break;
     }
