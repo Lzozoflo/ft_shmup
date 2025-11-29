@@ -80,6 +80,10 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
 
 
 void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
+    static int posPlayerY = game.posPlayerY;
+    static int posPlayerX = game.posPlayerX;
+
+
     switch (Board[y][x]->getType())
     {
         case BULLETALLY:{
@@ -95,14 +99,33 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
             break;
         }
         case SHIPALLY:{
+                // game.posPlayerY = posPlayerY;
+                // game.posPlayerX = posPlayerX;
+                // break;
 
             if (Board[y][x]->getHp() < 1)
                 throw(-42);  // dead so dont copy
+            if (!Board[game.posPlayerY][game.posPlayerX] && (posPlayerY != game.posPlayerY || posPlayerX != game.posPlayerX)){
+                posPlayerY = game.posPlayerY;
+                posPlayerX = game.posPlayerX;
+
+                ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
+                if (ptr == NULL)
+                    Debug::add_debug_nl("aled y pb la");
+                game.newBoard[posPlayerY][posPlayerX] = ptr->clone();
+            } else if (y == game.posPlayerY && x == game.posPlayerX){
+                ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
+                if (ptr == NULL)
+                    Debug::add_debug_nl("aled y pb la");
+                game.newBoard[y][x] = ptr->clone();
+            } else if (Board[game.posPlayerY][game.posPlayerX]) {
+                ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
+                if (ptr == NULL)
+                    Debug::add_debug_nl("aled y pb la");
+                game.newBoard[game.posPlayerY][game.posPlayerX] = ptr->clone();
+                Board[game.posPlayerY][game.posPlayerX] = ptr->clone();
+            }
             // Board[y][x]->takeDamage(1);
-            ShipAlly *ptr = dynamic_cast<ShipAlly *>(Board[y][x]);
-            if (ptr == NULL)
-                Debug::add_debug_nl("aled y pb la");
-            game.newBoard[game.posPlayerY][game.posPlayerX] = ptr->clone();
             break;
         }
         case SHIPENNEMIE:{
