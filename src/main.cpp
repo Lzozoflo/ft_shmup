@@ -17,6 +17,7 @@
 #define EXIT	0
 
 
+void null_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win);
 void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
@@ -61,6 +62,10 @@ int main(int ac, char **av) {
 
     std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
     fill_board(Board, game);     // init du Board + Pos de base du joueur
+    game.newBoard = Board;
+    null_board(game.newBoard, game);
+	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
+	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
     while (is_running) {
 
@@ -82,8 +87,6 @@ int main(int ac, char **av) {
 
 
         print_all_board(Board, game, win);
-
-        // mvwprintw(win, y, x, "A");                  // Affiche le joueur dans la fenêtre
 
 
         wrefresh(win);                              // Rafraîchir la fenêtre

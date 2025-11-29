@@ -2,6 +2,9 @@
 #ifndef STRUCT_HPP
 #define STRUCT_HPP
 
+class AGameEntity;
+#include <vector>
+
 typedef enum e_type_AGameEntity
 {
 	UNKNOWN = 0,
@@ -21,6 +24,7 @@ typedef struct s_game
     int width;
     int posPlayerX;
     int posPlayerY;
+    std::vector<std::vector<AGameEntity *> > newBoard;
 } t_game;
 
 

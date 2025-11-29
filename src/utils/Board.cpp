@@ -8,34 +8,34 @@
 #include "ShipAlly.hpp"
 #include "struct.hpp"
 
+
 void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 
     Board.clear();
     Board.resize(game.height);
 
-	// Debug::add_debug_nl("int baseposx = game.width >> 1: ", baseposx);
-	// Debug::add_debug_nl("int baseposy = game.height - 2: ", baseposy);
+	// Debug::add_debug_nl("game.posPlayerX: ", game.posPlayerX);
+	// Debug::add_debug_nl("game.posPlayerY: ", game.posPlayerY);
 
     for (int y = 0; y < game.height; ++y) {
         Board[y].resize(game.width);
-
         for (int x = 0; x < game.width; ++x) {
             if (game.posPlayerX == x && game.posPlayerY == y)
-                Board[y][x] = new ShipAlly(); // alloue un pointeur pour chaque case
+                Board[y][x] = new ShipAlly();
             else
                 Board[y][x] = NULL;  
         }
     }
 }
 
+
 void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win) {
     game.height--;
     game.width--;
     for (int y = 1; y < game.height; ++y) {
-
         for (int x = 1; x < game.width; ++x) {
-            if (Board[y][x]) {                                               // alloue un pointeur pour chaque case
-                mvwprintw(win, y, x, "%c", Board[y][x]->getType());          // Affiche le joueur dans la fenêtre
+            if (Board[y][x]) {
+                mvwprintw(win, y, x, "%c", Board[y][x]->getType());          // Affiche l'Entity dans la fenetre
             } else {
                 mvwprintw(win, y, x, " ");
             }
@@ -45,17 +45,72 @@ void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &g
     game.width++;
 }
 
-void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 
+void null_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
     for (int y = 0; y < game.height; ++y) {
-
         for (int x = 0; x < game.width; ++x) {
-            if (Board[y][x])
-                delete Board[y][x];  // alloue un pointeur pour chaque case
+            Board[y][x] = NULL;  
         }
     }
 }
 
-// void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
-//     std::vector<std::vector<AGameEntity *> > &Board
-// }
+
+void    copie_board( std::vector<std::vector<AGameEntity *> > &Board,  std::vector<std::vector<AGameEntity *> > &newBoard, t_game &game ) {
+    for (int y = 0; y < game.height; ++y) {
+        for (int x = 0; x < game.width; ++x) {
+            Board[y][x] = newBoard[y][x];  
+        }
+    }
+    
+}
+
+
+void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
+    for (int y = 0; y < game.height; ++y) {
+        for (int x = 0; x < game.width; ++x) {
+            if (Board[y][x])
+                delete Board[y][x];
+        }
+    }
+}
+
+
+void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
+    switch (Board[y][x]->getType())
+    {
+        case BULLETALLY:
+            // up
+            break;
+        case BULLETENNEMIE:
+            // down
+            break;
+        
+        case SHIPALLY:
+            (void)game.posPlayerY;
+            (void)game.posPlayerX;
+            // check pos change
+            break;
+        case SHIPENNEMIE:
+            // ia rand for move and hit
+            break;
+
+        default:
+            break;
+    }
+}
+
+void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
+
+    for (int y = 0; y < game.height; ++y) {
+        for (int x = 0; x < game.width; ++x) {
+            if (Board[y][x]){
+                all_case(Board, game, y, x);
+            }
+        }
+    }
+
+    delete_all_board(Board, game);
+    null_board(Board, game);
+    copie_board(Board, game.newBoard, game);
+    null_board(game.newBoard, game);
+}
