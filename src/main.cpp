@@ -10,10 +10,10 @@
 #include "struct.hpp"
 
 #define GAMEOVER    3000000// dead screen loser
-#define FPS6        160000// limit 6 fps 
-#define FPS30       32000// limit 30 fps 
-#define FPS60       16000// limit 60 fps 
-#define FPS120      8000// limit 120 fps 
+#define FPS6        160000// limit 6 fps
+#define FPS30       32000// limit 30 fps
+#define FPS60       16000// limit 60 fps
+#define FPS120      8000// limit 120 fps
 #define RUN	    1
 #define EXIT	0
 
@@ -35,89 +35,90 @@ int main(int ac, char **av) {
 	if (ac == 2) {
 		ptr = new Debug(av[1]);
 	}
-    bool is_running = RUN;
+	bool is_running = RUN;
 
 
-    initscr();
-    cbreak();
-    noecho();
-    curs_set(0);
-    keypad(stdscr, TRUE);
-    nodelay(stdscr, TRUE);
-    
-    // Taile de la fenetre
-    t_game game;
-    getmaxyx(stdscr, game.height, game.width);
+	initscr();
+	cbreak();
+	noecho();
+	curs_set(0);
+	keypad(stdscr, TRUE);
+	nodelay(stdscr, TRUE);
 
-    game.height -= 4;
-    game.width -= 4;
-    game.maxEnnemie = game.width >> 1;
-    game.nbEnnemie = 0;
-	
-    // Debug::add_debug_nl("taille de la windown - height: ", height);
+	// Taile de la fenetre
+	t_game game;
+	getmaxyx(stdscr, game.height, game.width);
+
+	game.height -= 4;
+	game.width -= 4;
+	game.maxEnnemie = game.width >> 1;
+	game.nbEnnemie = 0;
+	game.shot = false;
+
+	// Debug::add_debug_nl("taille de la windown - height: ", height);
 	// Debug::add_debug_nl("taille de la windown - width: ", width);
-    
-    // Création de la fenêtre au centre.
-    
-    WINDOW *win = newwin(game.height, game.width, 2, 2);
 
-    // Position du "joueur" à l'intérieur de la fenêtre
-    game.posPlayerX = game.width >> 1;
-    game.posPlayerY = game.height - 2;
+	// Création de la fenêtre au centre.
 
-    std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
-    fill_board(Board, game);     // init du Board + Pos de base du joueur
-    game.newBoard = Board;
-    null_board(game.newBoard, game);
+	WINDOW *win = newwin(game.height, game.width, 2, 2);
+
+	// Position du "joueur" à l'intérieur de la fenêtre
+	game.posPlayerX = game.width >> 1;
+	game.posPlayerY = game.height - 2;
+
+	std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
+
+	fill_board(Board, game);     // init du Board + Pos de base du joueur
+	game.newBoard = Board;
+	null_board(game.newBoard, game);
 	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
-    while (is_running) {
+	while (is_running) {
 
-        werase(win);                                // Effacer l'intérieur de la fenêtre
-        box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
-        // mvwprintw(stdscr, 1, 1, "comme ca");
+		werase(win);                                // Effacer l'intérieur de la fenêtre
+		box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
+		// mvwprintw(stdscr, 1, 1, "comme ca");
 
-        int ch = getch();
+		int ch = getch();
 
-        if (ch != -1)
-            Debug::add_debug_nl(" Input - ch: ", ch);
+		if (ch != -1)
+			Debug::add_debug_nl(" Input - ch: ", ch);
 
-        // all input search esc/q(to quit), up, down, right, left,
-        if (ch == 'q'|| ch == 27)                                       is_running = EXIT;
-        else if (ch == KEY_LEFT && game.posPlayerX > 1)                 game.posPlayerX--;
-        else if (ch == KEY_RIGHT && game.posPlayerX < game.width - 2)   game.posPlayerX++;
-        else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
-        else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
-        else if (ch == ' ')                                             Debug::add_debug_nl("piou paw");
+		// all input search esc/q(to quit), up, down, right, left,
+		if (ch == 'q'|| ch == 27)                                       is_running = EXIT;
+		else if (ch == KEY_LEFT && game.posPlayerX > 1)                 game.posPlayerX--;
+		else if (ch == KEY_RIGHT && game.posPlayerX < game.width - 2)   game.posPlayerX++;
+		else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
+		else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
+		else if (ch == ' ')                                             game.shot = true;
 
-        try
-        {
-            iter_board(Board, game);
-        }
-        catch(const int &i)
-        {
-            if (i == -42) {
-                mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
-                wrefresh(win);
-                usleep(3000000);
-            }
-            delete_all_board(game.newBoard, game);
-            break;
-        }
-        
-        print_all_board(Board, game, win);
+		try
+		{
+			iter_board(Board, game);
+		}
+		catch(const int &i)
+		{
+			if (i == -42) {
+				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
+				wrefresh(win);
+				usleep(3000000);
+			}
+			delete_all_board(game.newBoard, game);
+			break;
+		}
+
+		print_all_board(Board, game, win);
 
 
-        wrefresh(win);                              // Rafraîchir la fenêtre
-        usleep(FPS60);                              // fps limiter 
-    }
+		wrefresh(win);                              // Rafraîchir la fenêtre
+		usleep(FPS60);                              // fps limiter
+	}
 
-    delete_all_board(Board, game);
-    delwin(win);
-    endwin();
-    if (ptr != NULL)
-    	delete ptr;
-    return 0;
+	delete_all_board(Board, game);
+	delwin(win);
+	endwin();
+	if (ptr != NULL)
+		delete ptr;
+	return 0;
 }
-//384

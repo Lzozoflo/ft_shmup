@@ -18,8 +18,7 @@ class AGameEntity {
 		virtual AGameEntity * clone() = 0;
 		void	takeDamage(int damage);
 		int 	getHp() const;
-		char	getTypeChar() const ;
-		int 	getTypeInt() const ;
+		t_type_AgameEntity 	getType() const ;
 		virtual ~AGameEntity( void );
 		void	setType(t_type_AgameEntity type);
 

@@ -1,5 +1,6 @@
 
 #include "ShipAlly.hpp"
+#include "BulletAlly.hpp"
 #include "AShip.hpp"
 #include "Debug.hpp"
 

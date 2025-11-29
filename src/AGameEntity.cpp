@@ -7,12 +7,8 @@ AGameEntity::AGameEntity(t_type_AgameEntity type, int hp) : _type(type), _hp(hp)
 
 AGameEntity::~AGameEntity( void ) {}
 
-char	AGameEntity::getTypeChar() const {
+t_type_AgameEntity    AGameEntity::getType() const {
     return (this->_type);
-}
-
-int    AGameEntity::getTypeInt() const {
-    return (static_cast<int>(this->_type));
 }
 
 void	AGameEntity::setType(t_type_AgameEntity type) {
