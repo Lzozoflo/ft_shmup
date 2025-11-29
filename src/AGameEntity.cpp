@@ -18,3 +18,7 @@ void	AGameEntity::setType(t_type_AgameEntity type) {
 int AGameEntity::getHp() const {
     return this->_hp;
 }
+
+void AGameEntity::takeDamage(int damage) {
+    this->_hp -= damage;
+}
