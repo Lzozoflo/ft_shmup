@@ -13,6 +13,7 @@ class AShip : public AGameEntity {
 		AShip(t_type_AgameEntity type, int hp);
 		virtual AGameEntity * clone() = 0;
 		virtual ~AShip( void );
+		virtual AGameEnetity * shoot() = 0;
 };
 
 #endif

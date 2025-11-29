@@ -14,6 +14,7 @@ class ShipEnnemie : public AShip {
 		ShipEnnemie(int hp);
 		virtual AGameEntity * clone();
 		~ShipEnnemie( void );
+		virtual AGameEntity * shoot();
 };
 
 

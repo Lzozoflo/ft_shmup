@@ -9,3 +9,7 @@ AGameEntity *ShipEnnemie::clone(void){
 }
 
 ShipEnnemie::~ShipEnnemie( void ) {}
+
+AGameEntity * ShipEnnemie::shoot(){
+    return new BulletEnnemie();
+}
