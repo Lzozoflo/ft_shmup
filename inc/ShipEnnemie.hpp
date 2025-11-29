@@ -1,11 +1,11 @@
 
 
-#ifndef ISHIPENNEMIE_HPP
-#define ISHIPENNEMIE_HPP
+#ifndef SHIPENNEMIE_HPP
+#define SHIPENNEMIE_HPP
 
-#include "IShip.hpp"
+#include "AShip.hpp"
 
-class ShipEnnemie : public IShip {
+class ShipEnnemie : public AShip {
 
 	private:
 

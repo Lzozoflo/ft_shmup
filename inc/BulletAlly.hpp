@@ -3,9 +3,9 @@
 #ifndef BULLETALLY_HPP
 #define BULLETALLY_HPP
 
-#include "IBullet.hpp"
+#include "ABullet.hpp"
 
-class BulletAlly : public IBullet {
+class BulletAlly : public ABullet {
 
 	private:
 

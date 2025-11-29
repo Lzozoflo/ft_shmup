@@ -1,11 +1,11 @@
 
 
-#ifndef ISHIPALLY_HPP
-#define ISHIPALLY_HPP
+#ifndef SHIPALLY_HPP
+#define SHIPALLY_HPP
 
-#include "IShip.hpp"
+#include "AShip.hpp"
 
-class ShipAlly : public IShip {
+class ShipAlly : public AShip {
 
 	private:
 

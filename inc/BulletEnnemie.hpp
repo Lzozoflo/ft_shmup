@@ -3,9 +3,9 @@
 #ifndef BULLETENNEMIE_HPP
 #define BULLETENNEMIE_HPP
 
-#include "IBullet.hpp"
+#include "ABullet.hpp"
 
-class BulletEnnemie : public IBullet {
+class BulletEnnemie : public ABullet {
 
 	private:
 

@@ -16,6 +16,8 @@ HEADERS_DIR			:=		./inc/
 
 # Sub Directories
 UTILS_DIR			:=		utils/
+SHIP_DIR			:=		ship/
+BULLET_DIR			:=		bullet/
 
 # for a new DIR add a new :
 # NEW_DIR			:=		new/
@@ -35,10 +37,19 @@ HEADERS				:=		Debug.hpp
 
 
 
-SRC					:=		main.cpp
+SRC					:=		main.cpp		\
+							AGamkeEntity.cpp
 
 
 SRC_UTILS			:=		Debug.cpp
+
+SRC_SHIP			:=		AShip.cpp		\
+							Shipally.cpp	\
+							ShipEnnemie.cpp
+
+SRC_BULLET			:=		ABullet.cpp		\
+							Bulletally.cpp	\
+							BulletEnnemie.cpp
 
 
 # for a new SRC add a new :
@@ -49,6 +60,8 @@ SRC_UTILS			:=		Debug.cpp
 #	$(addprefix $(NEW_DIR), $(SRC_NEW))
 
 
-SRCS				=		$(addprefix $(UTILS_DIR), $(SRC_UTILS))\
+SRCS				=		$(addprefix $(SHIP_DIR), $(SRC_SHIP)) 		\
+							$(addprefix $(BULLET_DIR), $(SRC_BULLET))	\
+							$(addprefix $(UTILS_DIR), $(SRC_UTILS))		\
 							$(SRC)
 							
