@@ -42,7 +42,8 @@ SRC					:=		main.cpp		\
 							Empty.cpp
 
 
-SRC_UTILS			:=		Debug.cpp
+SRC_UTILS			:=		Board.cpp		\
+							Debug.cpp
 
 SRC_SHIP			:=		AShip.cpp		\
 							ShipAlly.cpp	\

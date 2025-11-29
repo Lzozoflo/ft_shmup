@@ -1,5 +1,4 @@
 
-
 #include <iostream>
 #include <unistd.h>
 #include <ncurses.h>
@@ -16,52 +15,18 @@
 #define RUN	    1
 #define EXIT	0
 
+typedef struct s_game
+{
+    int height;
+    int width;
+    int posPlayerX;
+    int posPlayerY;
+} t_game;
 
-void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width ) {
 
-    Board.clear();
-    Board.resize(height);
-
-    // Position du "joueur" à l'intérieur de la fenêtre
-    int baseposx = width >> 1;
-    int baseposy = height - 2;
-
-	// Debug::add_debug_nl("int baseposx = width >> 1: ", baseposx);
-	// Debug::add_debug_nl("int baseposy = height - 2: ", baseposy);
-
-    for (int y = 0; y < height; ++y) {
-        Board[y].resize(width);
-
-        for (int x = 0; x < width; ++x) {
-            if (baseposx == x && baseposy == y)
-                Board[y][x] = new ShipAlly();
-            else
-                Board[y][x] = new Empty();  // alloue un pointeur pour chaque case
-        }
-    }
-}
-
-void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width, WINDOW *win) {
-    std::string s;
-
-    for (int y = 1; y < height; ++y) {
-
-        for (int x = 1; x < width; ++x) {
-            s = Board[y][x]->getType();                                // alloue un pointeur pour chaque case
-            mvwprintw(win, y, x, "%s",s.c_str());                           // Affiche le joueur dans la fenêtre
-        }
-    }
-}
-
-void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width ) {
-
-    for (int y = 0; y < height; ++y) {
-
-        for (int x = 0; x < width; ++x) {
-            delete Board[y][x];  // alloue un pointeur pour chaque case
-        }
-    }
-}
+void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width );
+void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width, WINDOW *win);
+void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, int height, int width );
 
 int main(int ac, char **av) {
 
@@ -84,20 +49,25 @@ int main(int ac, char **av) {
     nodelay(stdscr, TRUE);
     
     // Taile de la fenetre
-    int height, width;
-    getmaxyx(stdscr, height, width);
+    t_game game;
+    getmaxyx(stdscr, game.height, game.width);
 
-	// Debug::add_debug_nl("taille de la windown - height: ", height);
+    game.height -= 4;
+    game.width -= 4;
+	
+    // Debug::add_debug_nl("taille de la windown - height: ", height);
 	// Debug::add_debug_nl("taille de la windown - width: ", width);
     
     // Création de la fenêtre au centre.
-    int starty = (height - (height - 4)) >> 1;      // 2 ??
-    int startx = (width - (width - 4)) >> 1;        // 2 ??
     
-    WINDOW *win = newwin(height - 4, width - 4, starty, startx);
+    WINDOW *win = newwin(game.height, game.width, 2, 2);
+
+    // Position du "joueur" à l'intérieur de la fenêtre
+    game.posPlayerX = game.width >> 1;
+    game.posPlayerY = game.height - 2;
 
     std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
-    fill_board(Board, (height - 4), (width - 4));   // init du Board + Pos de base du joueur
+    fill_board(Board, game.height, game.width);   // init du Board + Pos de base du joueur
 
     while (is_running) {
 
@@ -110,21 +80,16 @@ int main(int ac, char **av) {
             Debug::add_debug_nl(" Input - ch: ", ch);
 
         // all input search esc/q(to quit), up, down, right, left,
-        if (ch == 'q'|| ch == 27)                   is_running = EXIT;
-        else if (ch == KEY_LEFT && x > 1)           x--;
-        else if (ch == KEY_RIGHT && x < width - 6)  x++;
-        else if (ch == KEY_UP && y > 1)             y--;
-        else if (ch == KEY_DOWN && y < height - 6)  y++;
+        if (ch == 'q'|| ch == 27)                                       is_running = EXIT;
+        else if (ch == KEY_LEFT && game.posPlayerX > 1)                 game.posPlayerX--;
+        else if (ch == KEY_RIGHT && game.posPlayerX < game.width - 6)   game.posPlayerX++;
+        else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
+        else if (ch == KEY_DOWN && game.posPlayerY < game.height - 6)   game.posPlayerY++;
 
 
+        print_all_board(Board, game.height, game.width, win);
 
-        print_all_board(Board, (height - 5), (width - 5), win);
-        //a terme ici print board (tab[height - 4][width - 4])
         // mvwprintw(win, y, x, "A");                  // Affiche le joueur dans la fenêtre
-
-        
-
-
 
 
         wrefresh(win);                              // Rafraîchir la fenêtre
@@ -132,7 +97,7 @@ int main(int ac, char **av) {
     }
 
 
-    delete_all_board(Board, (height - 4), (width - 4));
+    delete_all_board(Board, game.height, game.width);
     delwin(win);
     endwin();
     if (ptr != NULL)
