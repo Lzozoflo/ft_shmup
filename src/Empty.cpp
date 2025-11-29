@@ -6,8 +6,8 @@ Empty::Empty( void ) : AGameEntity() {
 }
 
 
-void Empty::clone(void){
-    
+AGameEntity * Empty::clone(void){
+    return NULL;
 }
 
 

@@ -5,11 +5,9 @@ AShip::AShip( void ) : AGameEntity() {
     this->setType(SHIP);
 }
 
-
-void AShip::clone(void){
-    
+AGameEntity * AShip::clone(void){
+    return NULL;
 }
-
 
 AShip::~AShip( void ){
     

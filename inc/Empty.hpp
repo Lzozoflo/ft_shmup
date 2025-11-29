@@ -11,7 +11,7 @@ class Empty : public AGameEntity {
 
 	public:
 		Empty( void );
-		virtual void clone();
+		virtual AGameEntity * clone();
 		virtual ~Empty( void );
 
 };

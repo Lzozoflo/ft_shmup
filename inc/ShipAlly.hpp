@@ -11,7 +11,7 @@ class ShipAlly : public AShip {
 
 	public:
 		ShipAlly( void );
-		virtual void clone();
+		virtual AGameEntity * clone();
 		~ShipAlly( void );
 
 };

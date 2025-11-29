@@ -15,7 +15,7 @@ class AGameEntity {
 	public:
 		AGameEntity( void );
 		AGameEntity(t_type_AgameEntity type, int hp);
-		virtual void clone() = 0;
+		virtual AGameEntity * clone() = 0;
 		void takeDamage(int damage);
 		int getHp() const;
 		char	getType() const ;

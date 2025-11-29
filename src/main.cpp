@@ -21,6 +21,7 @@ void null_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game )
 void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win);
 void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
+void iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 
 int main(int ac, char **av) {
 
@@ -85,7 +86,7 @@ int main(int ac, char **av) {
         else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
         else if (ch == ' ')                                             Debug::add_debug_nl("piou paw");
 
-
+        iter_board(Board, game);
         print_all_board(Board, game, win);
 
 

@@ -12,7 +12,7 @@ class ShipEnnemie : public AShip {
 	public:
 		ShipEnnemie( void );
 		~ShipEnnemie( void );
-		virtual void clone();
+		virtual AGameEntity * clone();
 };
 
 

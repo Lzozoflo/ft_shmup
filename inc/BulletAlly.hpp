@@ -12,7 +12,7 @@ class BulletAlly : public ABullet {
 		BulletAlly( void );
 		BulletAlly(int damage, int hp);
 		~BulletAlly( void );
-		virtual void clone();
+		virtual AGameEntity * clone();
 };
 
 #endif

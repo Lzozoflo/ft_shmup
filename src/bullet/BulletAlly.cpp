@@ -7,4 +7,6 @@ BulletAlly::BulletAlly(int damage, int hp) : ABullet(BULLETALLY, hp, damage) {}
 
 BulletAlly::~BulletAlly( void ) {}
 
-void	BulletAlly::clone(){}
+AGameEntity * BulletAlly::clone(void){
+    return NULL;
+}

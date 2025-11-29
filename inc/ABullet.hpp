@@ -12,7 +12,7 @@ class ABullet : public AGameEntity {
 	public:
 		ABullet( void );
 		ABullet(t_type_AgameEntity type, int hp, int damage);
-		virtual void clone() = 0;
+		virtual AGameEntity * clone() = 0;
 		virtual ~ABullet( void );
 		int getDamage() const;
 };

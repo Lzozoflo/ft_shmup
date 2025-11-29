@@ -7,8 +7,8 @@ ShipAlly::ShipAlly( void ) : AShip() {
 }
 
 
-void ShipAlly::clone(void){
-    
+AGameEntity *ShipAlly::clone(void){
+    return NULL;
 }
 
 
