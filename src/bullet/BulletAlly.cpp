@@ -1,10 +1,9 @@
 #include "BulletAlly.hpp"
 
-BulletAlly::BulletAlly( void ) : ABullet(),
+BulletAlly::BulletAlly( void ) : ABullet() {}
 
-BulletAlly::~BulletAlly( void )
-{
-	return ;
+BulletAlly::~BulletAlly( void ) {
+
 }
 
 void	BulletAlly::clone(){}

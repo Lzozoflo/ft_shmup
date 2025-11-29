@@ -1,7 +1,7 @@
 
 #include "AShip.hpp"
 
-AShip::AShip( void ) : AGameEntity(), _hp(10) {
+AShip::AShip( void ) : AGameEntity() {
     this->setType(SHIP);
 }
 
