@@ -11,6 +11,7 @@ class BulletEnnemie : public ABullet {
 
 	public:
 		BulletEnnemie( void );
+		BulletEnnemie(int damage, int hp);
 		virtual ~BulletEnnemie( void );
 		virtual void clone();
 };
