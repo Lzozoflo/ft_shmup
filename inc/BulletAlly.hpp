@@ -10,7 +10,7 @@ class BulletAlly : public ABullet {
 	private:
 	public:
 		BulletAlly( void );
-		virtual ~BulletAlly( void );
+		~BulletAlly( void );
 		virtual void clone();
 };
 
