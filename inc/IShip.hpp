@@ -8,10 +8,10 @@
 class IShip : public AGameEntity {
 
 	private:
-
+		int	_hp = 0;
+		
 	public:
-		IShip( void );
-		~IShip( void );
+		virtual ~IShip( void ) = 0;
 
 };
 

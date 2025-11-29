@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <ncurses.h>
 
-#include "Windown.hpp"
 #include "Debug.hpp"
 
 #define FPS30   32000// limit 60 fps 
@@ -13,6 +12,7 @@
 #define RUN	    1
 #define EXIT	0
 
+#include <vector>
 
 int main(int ac, char **av) {
 
@@ -26,7 +26,6 @@ int main(int ac, char **av) {
 	}
     bool is_running = RUN;
 
-// 	// Debug::add_debug_nl("Voila comment ecrire une ligne de debug !");
 
     initscr();
     cbreak();
@@ -39,8 +38,8 @@ int main(int ac, char **av) {
     int height, width;
     getmaxyx(stdscr, height, width);
 
-	Debug::add_debug_nl("taille de la windown - height: ", height);
-	Debug::add_debug_nl("taille de la windown - width: ", width);
+	// Debug::add_debug_nl("taille de la windown - height: ", height);
+	// Debug::add_debug_nl("taille de la windown - width: ", width);
     
     // Création de la fenêtre au centre.
     int starty = (height - (height - 4)) >> 1;      // 2 ??

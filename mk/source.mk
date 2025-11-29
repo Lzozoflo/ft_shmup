@@ -31,13 +31,11 @@ UTILS_DIR			:=		utils/
 HEADERS_D			:=		./incs/
 
 
-HEADERS				:=		Windown.hpp		\
-							Debug.hpp
+HEADERS				:=		Debug.hpp
 
 
 
-SRC					:=		Windown.cpp		\
-							main.cpp
+SRC					:=		main.cpp
 
 
 SRC_UTILS			:=		Debug.cpp
