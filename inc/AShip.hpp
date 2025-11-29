@@ -5,9 +5,9 @@
 
 #include "AGameEntity.hpp"
 
-class AShip : protected AGameEntity {
+class AShip : public AGameEntity {
 
-	private:
+	protected:
 		int	_hp;
 
 	public:

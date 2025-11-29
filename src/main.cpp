@@ -8,6 +8,7 @@
 #include "Debug.hpp"
 #include "AGameEntity.hpp"
 #include "Empty.hpp"
+#include "ShipAlly.hpp"
 
 #define FPS30   32000// limit 60 fps 
 #define FPS60   16000// limit 60 fps 
@@ -21,11 +22,21 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, int height, in
     Board.clear();
     Board.resize(height);
 
+    // Position du "joueur" à l'intérieur de la fenêtre
+    int baseposx = width >> 1;
+    int baseposy = height - 2;
+
+	// Debug::add_debug_nl("int baseposx = width >> 1: ", baseposx);
+	// Debug::add_debug_nl("int baseposy = height - 2: ", baseposy);
+
     for (int y = 0; y < height; ++y) {
         Board[y].resize(width);
 
         for (int x = 0; x < width; ++x) {
-            Board[y][x] = new Empty();  // alloue un pointeur pour chaque case
+            if (baseposx == x && baseposy == y)
+                Board[y][x] = new ShipAlly();
+            else
+                Board[y][x] = new Empty();  // alloue un pointeur pour chaque case
         }
     }
 }
@@ -85,12 +96,8 @@ int main(int ac, char **av) {
     
     WINDOW *win = newwin(height - 4, width - 4, starty, startx);
 
-    // Position du "joueur" à l'intérieur de la fenêtre
-    int x = (width - 4) >> 1;
-    int y = (height - 4) - 2;
-    std::vector<std::vector<AGameEntity *> > Board;
-
-    fill_board(Board, (height - 4), (width - 4));
+    std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
+    fill_board(Board, (height - 4), (width - 4));   // init du Board + Pos de base du joueur
 
     while (is_running) {
 
@@ -113,7 +120,7 @@ int main(int ac, char **av) {
 
         print_all_board(Board, (height - 5), (width - 5), win);
         //a terme ici print board (tab[height - 4][width - 4])
-        mvwprintw(stdscr, 1, 1, "%d", x);                  // Affiche le joueur dans la fenêtre
+        // mvwprintw(win, y, x, "A");                  // Affiche le joueur dans la fenêtre
 
         
 
