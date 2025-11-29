@@ -6,7 +6,7 @@ Empty::Empty( void ) : AGameEntity() {
 }
 
 
-void Empty::idk(void){
+void Empty::clone(void){
     
 }
 

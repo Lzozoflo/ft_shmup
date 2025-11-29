@@ -13,10 +13,6 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game )
     Board.clear();
     Board.resize(game.height);
 
-    // Position du "joueur" à l'intérieur de la fenêtre
-    int baseposx = game.width >> 1;
-    int baseposy = game.height - 2;
-
 	// Debug::add_debug_nl("int baseposx = game.width >> 1: ", baseposx);
 	// Debug::add_debug_nl("int baseposy = game.height - 2: ", baseposy);
 
@@ -24,7 +20,7 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game )
         Board[y].resize(game.width);
 
         for (int x = 0; x < game.width; ++x) {
-            if (baseposx == x && baseposy == y)
+            if (game.posPlayerX == x && game.posPlayerY == y)
                 Board[y][x] = new ShipAlly(); // alloue un pointeur pour chaque case
             else
                 Board[y][x] = NULL;  
@@ -38,7 +34,7 @@ void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &g
     for (int y = 1; y < game.height; ++y) {
 
         for (int x = 1; x < game.width; ++x) {
-            if (Board[y][x]) {                        // alloue un pointeur pour chaque case
+            if (Board[y][x]) {                                               // alloue un pointeur pour chaque case
                 mvwprintw(win, y, x, "%c", Board[y][x]->getType());          // Affiche le joueur dans la fenêtre
             } else {
                 mvwprintw(win, y, x, " ");

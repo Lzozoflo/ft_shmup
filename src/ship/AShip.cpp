@@ -6,9 +6,9 @@ AShip::AShip( void ) : AGameEntity() {
 }
 
 
-// void AShip::idk(void){
+void AShip::clone(void){
     
-// }
+}
 
 
 AShip::~AShip( void ){

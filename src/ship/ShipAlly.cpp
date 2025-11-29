@@ -7,7 +7,7 @@ ShipAlly::ShipAlly( void ) : AShip() {
 }
 
 
-void ShipAlly::idk(void){
+void ShipAlly::clone(void){
     
 }
 
