@@ -119,16 +119,22 @@ int main(int ac, char **av) {
 		{
 			iter_board(Board, game);
 			if (game.gamelife < 0)
-				throw (-42);
+				throw (-21);
 		}
 		catch(const int &i)
 		{
 			if (i == -42) {
-				mvwprintw(status,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp());
+				mvwprintw(status,1 ,3, "player HP : 0 ");
 				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
-				wrefresh(win);
-				usleep(GAMEOVER);
 			}
+			if (i == -21) {
+				if (Board[game.posPlayerY][game.posPlayerX])
+					mvwprintw(status,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp());
+				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
+			}
+			wrefresh(win);
+			wrefresh(status);
+			usleep(GAMEOVER);
 			break;
 		}
 

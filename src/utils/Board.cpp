@@ -78,7 +78,7 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
 }
 
 
-void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x, int &randomshoot, int &move) {
+void all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x, int &randomshoot, int &move) {
 
 
 	switch (Board[y][x]->getType())
@@ -117,19 +117,21 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 
 			Debug::add_debug_nl("BulletAlly");
 			if (y + 1 < game.height - 1){
-				if (!game.newBoard[y + 1][x]) {
+				if (!Board[y + 1][x]) {
 					game.newBoard[y + 1][x] = Bulletptr->clone();
 				} else {
-					int hp = game.newBoard[y + 1][x]->getHp();
-					game.newBoard[y + 1][x]->takeDamage(Bulletptr->getDamage());
+					int hp = Board[y + 1][x]->getHp();
+					Board[y + 1][x]->takeDamage(Bulletptr->getDamage());
 					Bulletptr->takeDamage(hp);
 					if (Bulletptr->getHp() < 1) {
 						delete Board[y][x];
 						Board[y][x] = NULL;
 					}
-					if (game.newBoard[y + 1][x]->getHp() < 1) {
-						delete game.newBoard[y + 1][x];
-						game.newBoard[y + 1][x] = NULL;
+					if (Board[y + 1][x]->getHp() < 1) {
+						delete Board[y + 1][x];
+						Board[y + 1][x] = NULL;
+						if (game.posPlayerY == y + 1 && game.posPlayerX == x)
+							throw (-42);
 					}
 				}
 			} else
