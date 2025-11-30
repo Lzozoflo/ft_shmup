@@ -3,17 +3,19 @@
 #define STRUCT_HPP
 
 #define GAMEOVER    3000000// dead screen loser
-#define FPS6        160000// limit 6 fps
-#define FPS30       32000// limit 30 fps
-#define FPS60       16000// limit 60 fps
-#define FPS120      8000// limit 120 fps
+#define FPS6        6.0f// limit 6 fps
+#define FPS30       FPS6 * 5// limit 30 fps
+#define FPS60       FPS30 * 2// limit 60 fps
+#define FPS120      FPS60 * 2// limit 120 fps
 #define RUN	    1
 #define EXIT	0
 
 #define RANDSHOOT 50	// rand frame shoot
 #define NBDIFF 2		// vitesse de spawn
 #define BULLETMOVE 0	// rand frame bullet move
-#define GAMELIFE 20	// rand frame bullet move
+#define GAMELIFE 2000	// rand frame bullet move
+#define TAUXSPAWN 10	// largeur / $@
+#define HPSHIPALLY 101
 
 
 

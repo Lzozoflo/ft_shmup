@@ -52,7 +52,7 @@ int main(int ac, char **av) {
     }
 	game.height -= 7;
 	game.width -= 6;
-	game.maxEnnemie = game.width >> 1;
+	game.maxEnnemie = game.width / TAUXSPAWN;
 	game.nbEnnemie = 0;
 	game.shot = false;
 	game.gamelife = GAMELIFE;
@@ -84,7 +84,6 @@ int main(int ac, char **av) {
 	game.newBoard = Board;
 	null_board(game.newBoard, game);
 	Clock clock;
-	const float fps = 60.0f;
 	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
@@ -148,7 +147,7 @@ int main(int ac, char **av) {
 		print_all_board(Board, game, win);
 
 
-		clock.fpsLimit(fps);						// fps limiter
+		clock.fpsLimit(FPS60);						// fps limiter
 		wrefresh(win);                              // Rafraîchir la fenêtre
 		wrefresh(status);                           // Rafraîchir la fenêtre
 		//usleep(FPS60);                            // fps limiter
@@ -157,6 +156,7 @@ int main(int ac, char **av) {
 	delete_all_board(game.newBoard, game);
 	delete_all_board(Board, game);
 	delwin(win);
+	delwin(status);
 	endwin();
 	if (ptr != NULL)
 	delete ptr;
