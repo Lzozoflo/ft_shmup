@@ -13,7 +13,7 @@ AGameEntity *ShipEnnemie::clone(void){
 }
 
 bool ShipEnnemie::canIShoot(int &randShootTick){
-	Debug::add_debug_nl("ennemie peu shoot");
+	// Debug::add_debug_nl("ennemie peu shoot");
 	return (this->_randshoot == randShootTick);
 }
 

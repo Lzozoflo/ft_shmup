@@ -186,7 +186,7 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 
 #include <cstdlib>
 #define NBDIFF 20
-#define BULLETMOVE 3
+#define BULLETMOVE 10
 
 void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 	static int iter = NBDIFF;

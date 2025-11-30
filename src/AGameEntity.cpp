@@ -20,5 +20,9 @@ int AGameEntity::getHp() const {
 }
 
 void AGameEntity::takeDamage(int damage) {
-    this->_hp -= damage;
+	if (this->_hp < damage)
+		this->_hp = 0;
+	else
+		this->_hp -= damage;
+
 }

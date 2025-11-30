@@ -50,8 +50,8 @@ int main(int ac, char **av) {
 	t_game game;
 	getmaxyx(stdscr, game.height, game.width);
 
-	game.height -= 4;
-	game.width -= 4;
+	game.height -= 6;
+	game.width -= 6;
 	game.maxEnnemie = game.width >> 1;
 	game.nbEnnemie = 0;
 	game.shot = false;
@@ -61,7 +61,7 @@ int main(int ac, char **av) {
 
 	// Création de la fenêtre au centre.
 
-	WINDOW *win = newwin(game.height, game.width, 2, 2);
+	WINDOW *win = newwin(game.height, game.width, 3, 3);
 
 	// Position du "joueur" à l'intérieur de la fenêtre
 	game.posPlayerX = game.width >> 1;
@@ -80,13 +80,13 @@ int main(int ac, char **av) {
 	while (is_running) {
 		int h, w;
 		getmaxyx(stdscr, h, w);
-		if (h - 4 != game.height || w - 4 != game.width){
+		if (h - 6 != game.height || w - 6 != game.width){
 			is_running = 21;
 			break;
 		}
 		werase(win);                                // Effacer l'intérieur de la fenêtre
 		box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
-		mvwprintw(stdscr,1 ,3, "player HP : %d", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
+		mvwprintw(stdscr,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
 		int ch = getch();
 
 		if (ch != -1)
@@ -107,6 +107,7 @@ int main(int ac, char **av) {
 		catch(const int &i)
 		{
 			if (i == -42) {
+				mvwprintw(stdscr,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp());
 				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
 				wrefresh(win);
 				usleep(GAMEOVER);
@@ -117,8 +118,8 @@ int main(int ac, char **av) {
 		print_all_board(Board, game, win);
 
 
-		wrefresh(win);                              // Rafraîchir la fenêtre
 		clock.fpsLimit(fps);						// fps limiter
+		wrefresh(win);                              // Rafraîchir la fenêtre
 		//usleep(FPS60);                            // fps limiter
 	}
 
