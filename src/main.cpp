@@ -94,6 +94,7 @@ int main(int ac, char **av) {
 	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
+	int iterbg = ITERBG;
 
 	while (is_running) {
 		int h, w;
@@ -127,8 +128,11 @@ int main(int ac, char **av) {
 		else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
 		else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
 		else if (ch == ' ')                                             game.shot = true;
-		random_background(Background, game);
-        move_background(Background, game);
+		if (!iterbg--){
+			iterbg = ITERBG;
+			random_background(Background, game);
+			move_background(Background, game);
+		}
 		print_background(Background, game, win);
 		try
 		{

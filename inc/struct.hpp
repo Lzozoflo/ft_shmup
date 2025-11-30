@@ -16,6 +16,7 @@
 #define GAMELIFE 2000	// rand frame bullet move
 #define TAUXSPAWN 10	// largeur / $@
 #define HPSHIPALLY 101
+#define ITERBG 10
 
 
 
@@ -27,8 +28,8 @@ typedef enum e_type_AGameEntity
 	UNKNOWN = 0,
 	EMPTY = ' ',
 	BULLET = '0',
-	BULLETALLY = 'x',
-	BULLETENNEMIE = '+',
+	BULLETALLY = '^',
+	BULLETENNEMIE = 'v',
 	SHIP = '1',
 	SHIPALLY = 'A',
 	SHIPENNEMIE = 'V',
