@@ -8,6 +8,7 @@
 #include "AGameEntity.hpp"
 #include "ShipAlly.hpp"
 #include "struct.hpp"
+#include "Clock.hpp"
 
 #define GAMEOVER    3000000// dead screen loser
 #define FPS6        160000// limit 6 fps
@@ -71,6 +72,8 @@ int main(int ac, char **av) {
 	fill_board(Board, game);     // init du Board + Pos de base du joueur
 	game.newBoard = Board;
 	null_board(game.newBoard, game);
+	Clock clock;
+	const float fps = 60.0f;
 	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
@@ -115,7 +118,8 @@ int main(int ac, char **av) {
 
 
 		wrefresh(win);                              // Rafraîchir la fenêtre
-		usleep(FPS60);                              // fps limiter
+		clock.fpsLimit(fps);						// fps limiter
+		//usleep(FPS60);                            // fps limiter
 	}
 
 	delete_all_board(game.newBoard, game);

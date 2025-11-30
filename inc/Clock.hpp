@@ -2,8 +2,8 @@
 // Created by tjooris on 11/30/25.
 //
 
-#ifndef FT_SHMUP_CLOCK_HPP
-#define FT_SHMUP_CLOCK_HPP
+#ifndef CLOCK_HPP
+#define CLOCK_HPP
 
 #include <ctime>
 
@@ -15,6 +15,8 @@ class Clock
 		Clock( void );
 		~Clock( void );
 		float	getDeltaTime( void );
+		void	reset( void );
+		void	fpsLimit( float fps );
 };
 
-#endif //FT_SHMUP_CLOCK_HPP
+#endif
