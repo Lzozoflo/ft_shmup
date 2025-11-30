@@ -76,7 +76,7 @@ int main(int ac, char **av) {
 	WINDOW *win = newwin(game.height, game.width, 5, 3);
 	WINDOW *status = newwin(5, game.width, 0, 3);
 	start_color();
-	init_pair(1, COLOR_BLACK, COLOR_RED);
+	init_pair(1, COLOR_BLACK, COLOR_CYAN);
 	wbkgd(win, COLOR_PAIR(1));
 
 	// Position du "joueur" à l'intérieur de la fenêtre

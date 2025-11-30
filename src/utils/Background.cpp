@@ -50,7 +50,7 @@ void move_background( std::vector<std::vector<t_type_Background> > &Board, t_gam
 	for (int y = game.height - 2; y >= 0; --y){
 		for (int x = 0; x < game.width; ++x) {
 			if (Board[y][x] != EMPTY0) {
-				Board[y + 1][x] = STAR1;
+				Board[y + 1][x] = Board[y][x];
 				Board[y][x] = EMPTY0;
 			}
 		}
