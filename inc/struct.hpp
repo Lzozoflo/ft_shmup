@@ -27,13 +27,21 @@ typedef enum e_type_AGameEntity
 	UNKNOWN = 0,
 	EMPTY = ' ',
 	BULLET = '0',
-	BULLETALLY = '*',
+	BULLETALLY = 'x',
 	BULLETENNEMIE = '+',
 	SHIP = '1',
 	SHIPALLY = 'A',
 	SHIPENNEMIE = 'V',
 } t_type_AgameEntity;
 
+
+typedef enum e_type_Background
+{
+	EMPTY0 = 0,		// " "
+	STAR1 = 1,		// "."
+	STAR2 = 3,		// "'"
+	STAR3 = 5,		// "`"
+} t_type_Background;
 
 typedef struct s_game
 {

@@ -18,6 +18,11 @@ void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &g
 void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void printHpBar(WINDOW *win, int y, int x, int hp, int maxHp, int width);
+void fill_background( std::vector<std::vector<t_type_Background> > &Board, t_game &game );
+void random_background( std::vector<std::vector<t_type_Background> > &Board, t_game &game );
+void move_background( std::vector<std::vector<t_type_Background> > &Board, t_game &game );
+void print_background( std::vector<std::vector<t_type_Background> > &Board, t_game &game, WINDOW *win);
+
 
 int main(int ac, char **av) {
 
@@ -79,8 +84,10 @@ int main(int ac, char **av) {
 	game.posPlayerY = game.height - 2;
 
 	std::vector<std::vector<AGameEntity *> > Board; // Board de jeu
-
+	std::vector<std::vector<t_type_Background> > Background; // Background de jeu
 	fill_board(Board, game);     // init du Board + Pos de base du joueur
+	fill_background(Background, game); // init du Background
+
 	game.newBoard = Board;
 	null_board(game.newBoard, game);
 	Clock clock;
@@ -120,7 +127,9 @@ int main(int ac, char **av) {
 		else if (ch == KEY_UP && game.posPlayerY > 1)                   game.posPlayerY--;
 		else if (ch == KEY_DOWN && game.posPlayerY < game.height - 2)   game.posPlayerY++;
 		else if (ch == ' ')                                             game.shot = true;
-
+		random_background(Background, game);
+        move_background(Background, game);
+		print_background(Background, game, win);
 		try
 		{
 			iter_board(Board, game);

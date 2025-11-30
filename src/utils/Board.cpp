@@ -39,8 +39,6 @@ void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &g
 		for (int x = 1; x < game.width; ++x) {
 			if (Board[y][x]) {
 				mvwprintw(win, y, x, "%c", Board[y][x]->getType());          // Affiche l'Entity dans la fenetre
-			} else {
-				mvwprintw(win, y, x, " ");
 			}
 		}
 	}
