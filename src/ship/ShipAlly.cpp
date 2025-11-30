@@ -15,6 +15,5 @@ AGameEntity *ShipAlly::clone(void){
 ShipAlly::~ShipAlly( void ){}
 
 AGameEntity * ShipAlly::shoot(){
-    //Debug::add_debug_nl("ShipAlly shoot");
     return new BulletAlly();
 }
