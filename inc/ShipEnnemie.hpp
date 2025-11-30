@@ -4,7 +4,7 @@
 #define SHIPENNEMIE_HPP
 
 #include "AShip.hpp"
-#define RANDSHOOT 500
+#include "struct.hpp"
 
 class ShipEnnemie : public AShip {
 

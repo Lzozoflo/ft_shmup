@@ -10,14 +10,6 @@
 #include "struct.hpp"
 #include "Clock.hpp"
 
-#define GAMEOVER    3000000// dead screen loser
-#define FPS6        160000// limit 6 fps
-#define FPS30       32000// limit 30 fps
-#define FPS60       16000// limit 60 fps
-#define FPS120      8000// limit 120 fps
-#define RUN	    1
-#define EXIT	0
-
 
 
 void null_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
@@ -55,13 +47,23 @@ int main(int ac, char **av) {
 	game.maxEnnemie = game.width >> 1;
 	game.nbEnnemie = 0;
 	game.shot = false;
+	game.gamelife = GAMELIFE;
+	// std::string str;
+	// str[game.gamelife + 1 ] = ' ';
 
 	// Debug::add_debug_nl("taille de la windown - height: ", height);
 	// Debug::add_debug_nl("taille de la windown - width: ", width);
 
 	// Création de la fenêtre au centre.
 
+
+
+
+
 	WINDOW *win = newwin(game.height, game.width, 3, 3);
+	start_color();
+	init_pair(1, COLOR_BLACK, COLOR_RED);
+	wbkgd(win, COLOR_PAIR(1));
 
 	// Position du "joueur" à l'intérieur de la fenêtre
 	game.posPlayerX = game.width >> 1;
@@ -77,6 +79,7 @@ int main(int ac, char **av) {
 	// Debug::add_debug_nl("game.newBoard.size(): ", game.newBoard[1].size());
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
+
 	while (is_running) {
 		int h, w;
 		getmaxyx(stdscr, h, w);
@@ -85,7 +88,7 @@ int main(int ac, char **av) {
 			break;
 		}
 		werase(win);                                // Effacer l'intérieur de la fenêtre
-		box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
+		// box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
 		mvwprintw(stdscr,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
 		int ch = getch();
 
@@ -103,6 +106,8 @@ int main(int ac, char **av) {
 		try
 		{
 			iter_board(Board, game);
+			if (game.gamelife < 0)
+				throw (-42);
 		}
 		catch(const int &i)
 		{

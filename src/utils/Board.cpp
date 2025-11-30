@@ -132,7 +132,8 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 						game.newBoard[y + 1][x] = NULL;
 					}
 				}
-			}
+			} else
+				game.gamelife--;
 			break;
 		}
 		case SHIPALLY:{
@@ -185,9 +186,6 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 }
 
 #include <cstdlib>
-#define NBDIFF 20
-#define BULLETMOVE 10
-
 void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 	static int iter = NBDIFF;
 	int random = std::rand() % game.width;
@@ -208,8 +206,8 @@ void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &gam
 				Debug::add_debug_nl("Bullet dmg - hp: ", Shipptr->getHp());
 
 			} else if (value == SHIPENNEMIE || value == SHIPALLY) {
-				// int dmg = Board[game.posPlayerY][game.posPlayerX]->getHp();
-				Shipptr->takeDamage(9000); // its over 9000! fckle sujet
+				int dmg = Board[game.posPlayerY][game.posPlayerX]->getHp();
+				Shipptr->takeDamage(dmg); // its over 9000! fckle sujet
 				game.nbEnnemie--;
 				Debug::add_debug_nl("ship dmg - hp: ", Shipptr->getHp());
 				Debug::add_debug_nl("ShipEnnemie destroy", game.nbEnnemie);
