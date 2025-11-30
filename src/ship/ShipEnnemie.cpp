@@ -1,7 +1,7 @@
 #include "ShipEnnemie.hpp"
 #include "BulletEnnemie.hpp"
 
-ShipEnnemie::ShipEnnemie( void ) : AShip(SHIPENNEMIE, 1) {}
+ShipEnnemie::ShipEnnemie( void ) : AShip(SHIPENNEMIE, 2) {}
 
 ShipEnnemie::ShipEnnemie(int hp) : AShip(SHIPENNEMIE, hp) {}
 

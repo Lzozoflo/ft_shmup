@@ -84,10 +84,29 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 	{
 		case BULLETALLY:{
 
-			BulletAlly *ptr = dynamic_cast<BulletAlly *>(Board[y][x]);
+			BulletAlly *Bulletptr = dynamic_cast<BulletAlly *>(Board[y][x]);
 
 			Debug::add_debug_nl("BulletAlly");
-			game.newBoard[y][x] = ptr->clone();
+			if (y - 1 > 0){
+				if (!game.newBoard[y - 1][x]) {
+					game.newBoard[y - 1][x] = Bulletptr->clone();
+				} else {
+					int hp = game.newBoard[y - 1][x]->getHp();
+					game.newBoard[y - 1][x]->takeDamage(Bulletptr->getDamage());
+					Bulletptr->takeDamage(hp);
+					if (Bulletptr->getHp() < 1) {
+						delete Bulletptr;
+						Bulletptr = NULL;
+					}
+					if (game.newBoard[y - 1][x]->getHp() < 1) {
+						delete game.newBoard[y - 1][x];
+						game.newBoard[y - 1][x] = NULL;
+					}
+				}
+
+
+			} else
+				game.newBoard[y][x] = Bulletptr->clone();
 			break;
 		}
 		case BULLETENNEMIE:{
@@ -180,10 +199,14 @@ void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &gam
 				delete Bulletptr;
 				Bulletptr = NULL;
 			}
+			if (Board[posPlayerY - 1][posPlayerX]->getHp() < 1) {
+				delete Board[posPlayerY - 1][posPlayerX];
+				Board[posPlayerY - 1][posPlayerX] = NULL;
+			}
 		}
 		game.newBoard[posPlayerY - 1][posPlayerX] = Bulletptr;
 		game.shot = false;
-		Debug::add_debug_nl("SHOOT type : ", (int)(game.newBoard[posPlayerY - 1][posPlayerX]->getType()));
+		// Debug::add_debug_nl("SHOOT type : ", (int)(game.newBoard[posPlayerY - 1][posPlayerX]->getType()));
 	}
 
 		// Debug::add_debug_nl("SHOOT x : ", game.posPlayerX);

@@ -104,7 +104,6 @@ int main(int ac, char **av) {
 				wrefresh(win);
 				usleep(3000000);
 			}
-			delete_all_board(game.newBoard, game);
 			break;
 		}
 
@@ -115,6 +114,7 @@ int main(int ac, char **av) {
 		usleep(FPS60);                              // fps limiter
 	}
 
+	delete_all_board(game.newBoard, game);
 	delete_all_board(Board, game);
 	delwin(win);
 	endwin();
