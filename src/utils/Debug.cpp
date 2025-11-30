@@ -16,7 +16,7 @@ Debug::~Debug( void ) {
 }
 
 
-Debug::Debug( std::string str ) { 
+Debug::Debug( std::string str ) {
 
     this->_debug = true;
 
@@ -30,7 +30,7 @@ Debug::Debug( std::string str ) {
 void Debug::_add_time( void ) {
     if (!Debug::check_debug_on())
         return;
-    std::time_t t = std::time(NULL);  
+    std::time_t t = std::time(NULL);
     std::tm* info = std::localtime(&t);
 
     Debug::_debugfile   << (1900 + info->tm_year) << "-"
@@ -39,6 +39,7 @@ void Debug::_add_time( void ) {
                         << info->tm_hour << "-"
                         << info->tm_min << "-"
                         << info->tm_sec << " ";
+
 }
 
 bool Debug::check_debug_on(){

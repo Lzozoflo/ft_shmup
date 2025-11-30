@@ -95,18 +95,15 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 					game.newBoard[y - 1][x]->takeDamage(Bulletptr->getDamage());
 					Bulletptr->takeDamage(hp);
 					if (Bulletptr->getHp() < 1) {
-						delete Bulletptr;
-						Bulletptr = NULL;
+						delete Board[y][x];
+						Board[y][x] = NULL;
 					}
 					if (game.newBoard[y - 1][x]->getHp() < 1) {
 						delete game.newBoard[y - 1][x];
 						game.newBoard[y - 1][x] = NULL;
 					}
 				}
-
-
-			} else
-				game.newBoard[y][x] = Bulletptr->clone();
+			}
 			break;
 		}
 		case BULLETENNEMIE:{
