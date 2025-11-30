@@ -42,7 +42,14 @@ int main(int ac, char **av) {
 	t_game game;
 	getmaxyx(stdscr, game.height, game.width);
 
-	game.height -= 6;
+	if (game.height < 13 || game.width < 50) {
+        endwin();
+        std::cerr << "Error: window size too small. Min size 40x15." << std::endl;
+        if (ptr != NULL)
+            delete ptr;
+        return (1);
+    }
+	game.height -= 7;
 	game.width -= 6;
 	game.maxEnnemie = game.width >> 1;
 	game.nbEnnemie = 0;
@@ -60,7 +67,8 @@ int main(int ac, char **av) {
 
 
 
-	WINDOW *win = newwin(game.height, game.width, 3, 3);
+	WINDOW *win = newwin(game.height, game.width, 5, 3);
+	WINDOW *status = newwin(5, game.width + 2, 0, 3);
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_RED);
 	wbkgd(win, COLOR_PAIR(1));
@@ -83,13 +91,17 @@ int main(int ac, char **av) {
 	while (is_running) {
 		int h, w;
 		getmaxyx(stdscr, h, w);
-		if (h - 6 != game.height || w - 6 != game.width){
+		if (h - 7 != game.height || w - 6 != game.width){
 			is_running = 21;
 			break;
 		}
+		Debug::add_debug_nl("h: ", h);
+		Debug::add_debug_nl("w: ", w);
+
 		werase(win);                                // Effacer l'intérieur de la fenêtre
+		box(status, 0, 0);                         // Ecrie la bordure de la fenêtre
 		// box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
-		mvwprintw(stdscr,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
+		mvwprintw(status,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
 		int ch = getch();
 
 		if (ch != -1)
@@ -112,7 +124,7 @@ int main(int ac, char **av) {
 		catch(const int &i)
 		{
 			if (i == -42) {
-				mvwprintw(stdscr,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp());
+				mvwprintw(status,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp());
 				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
 				wrefresh(win);
 				usleep(GAMEOVER);
@@ -125,6 +137,7 @@ int main(int ac, char **av) {
 
 		clock.fpsLimit(fps);						// fps limiter
 		wrefresh(win);                              // Rafraîchir la fenêtre
+		wrefresh(status);                           // Rafraîchir la fenêtre
 		//usleep(FPS60);                            // fps limiter
 	}
 
