@@ -86,7 +86,7 @@ int main(int ac, char **av) {
 		}
 		werase(win);                                // Effacer l'intérieur de la fenêtre
 		box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
-
+		mvwprintw(stdscr,1 ,3, "player HP : %d", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
 		int ch = getch();
 
 		if (ch != -1)
