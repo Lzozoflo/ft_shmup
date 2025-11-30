@@ -1,12 +1,20 @@
 #include "ShipEnnemie.hpp"
 #include "BulletEnnemie.hpp"
+#include "Debug.hpp"
 
-ShipEnnemie::ShipEnnemie( void ) : AShip(SHIPENNEMIE, 2) {}
+#include <cstdlib>
 
-ShipEnnemie::ShipEnnemie(int hp) : AShip(SHIPENNEMIE, hp) {}
+ShipEnnemie::ShipEnnemie( void ) : AShip(SHIPENNEMIE, 2), _randshoot(std::rand() % RANDSHOOT)  {}
+
+ShipEnnemie::ShipEnnemie(const ShipEnnemie &other) : AShip(SHIPENNEMIE, other._hp), _randshoot(other._randshoot) {}
 
 AGameEntity *ShipEnnemie::clone(void){
-    return new ShipEnnemie(this->_hp);
+    return new ShipEnnemie(*this);
+}
+
+bool ShipEnnemie::canIShoot(int &randShootTick){
+	Debug::add_debug_nl("ennemie peu shoot");
+	return (this->_randshoot == randShootTick);
 }
 
 ShipEnnemie::~ShipEnnemie( void ) {}

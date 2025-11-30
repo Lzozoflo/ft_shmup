@@ -78,7 +78,8 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
 }
 
 
-void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x, int &randomshoot) {
+void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x, int &randomshoot, int &move) {
+
 
 	switch (Board[y][x]->getType())
 	{
@@ -108,10 +109,30 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 		}
 		case BULLETENNEMIE:{
 			// down
-			// BulletEnnemie *ptr = dynamic_cast<BulletEnnemie *>(Board[y][x]);
-			if ((y + 1) < (game.height - 2) && Board[y + 1][x])
-				Debug::add_debug_nl("bullet down");
-			// game.newBoard[y][x] = ptr->clone();
+			BulletEnnemie *Bulletptr = dynamic_cast<BulletEnnemie *>(Board[y][x]);
+			if (move != 0){
+				game.newBoard[y][x] = Bulletptr->clone();
+				break;
+			}
+
+			Debug::add_debug_nl("BulletAlly");
+			if (y + 1 < game.height - 1){
+				if (!game.newBoard[y + 1][x]) {
+					game.newBoard[y + 1][x] = Bulletptr->clone();
+				} else {
+					int hp = game.newBoard[y + 1][x]->getHp();
+					game.newBoard[y + 1][x]->takeDamage(Bulletptr->getDamage());
+					Bulletptr->takeDamage(hp);
+					if (Bulletptr->getHp() < 1) {
+						delete Board[y][x];
+						Board[y][x] = NULL;
+					}
+					if (game.newBoard[y + 1][x]->getHp() < 1) {
+						delete game.newBoard[y + 1][x];
+						game.newBoard[y + 1][x] = NULL;
+					}
+				}
+			}
 			break;
 		}
 		case SHIPALLY:{
@@ -121,36 +142,35 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 		}
 		case SHIPENNEMIE:{
 			(void)randomshoot;
-			// ShipEnnemie *Shipptr = dynamic_cast<ShipEnnemie *>(Board[y][x]);
-
-			// if (Shipptr) {
-			// 	ABullet *Bulletptr = dynamic_cast<ABullet *>(Shipptr->shoot());
-			// 	// Debug::add_debug_nl("SHOOT y : ", game.posPlayerY - 1);
-			// 	// Debug::add_debug_nl("SHOOT x : ", game.posPlayerX);
-			// 	if (!Bulletptr)
-			// 		throw (-42);
-			// 	if (Board[posPlayerY - 1][posPlayerX]) {
-			// 		int hp = Board[posPlayerY - 1][posPlayerX]->getHp();
-			// 		Board[posPlayerY - 1][posPlayerX]->takeDamage(Bulletptr->getDamage());
-			// 		Bulletptr->takeDamage(hp);
-			// 		if (Bulletptr->getHp() < 1) {
-			// 			delete Bulletptr;
-			// 			Bulletptr = NULL;
-			// 		}
-			// 		if (Board[posPlayerY - 1][posPlayerX]->getHp() < 1) {
-			// 			delete Board[posPlayerY - 1][posPlayerX];
-			// 			Board[posPlayerY - 1][posPlayerX] = NULL;
-			// 		}
-			// 	}
-			// 	game.newBoard[posPlayerY - 1][posPlayerX] = Bulletptr;
-			// 	game.shot = false;
-			// 	// Debug::add_debug_nl("SHOOT type : ", (int)(game.newBoard[posPlayerY - 1][posPlayerX]->getType()));
-			// }
 
 			if (Board[y][x]->getHp() < 1){
 				game.nbEnnemie--;
 				break;
 			}
+
+			ShipEnnemie *Shipptr = dynamic_cast<ShipEnnemie *>(Board[y][x]);
+
+			if (Shipptr->canIShoot(randomshoot)) {
+				ABullet *Bulletptr = dynamic_cast<ABullet *>(Shipptr->shoot());
+				if (!Bulletptr)
+					throw (-42);
+				if (game.newBoard[y + 1][x]) {
+					int hp = game.newBoard[y + 1][x]->getHp();
+					game.newBoard[y + 1][x]->takeDamage(Bulletptr->getDamage());
+					Bulletptr->takeDamage(hp);
+					if (Bulletptr->getHp() < 1) {
+						delete Bulletptr;
+						Bulletptr = NULL;
+					}
+					if (game.newBoard[y + 1][x]->getHp() < 1) {
+						delete game.newBoard[y + 1][x];
+						game.newBoard[y + 1][x] = NULL;
+					}
+				}
+				game.newBoard[y + 1][x] = Bulletptr;
+				// Debug::add_debug_nl("SHOOT type : ", (int)(game.newBoard[y + 1][x]->getType()));
+			}
+
 
 			ShipEnnemie *ptr = dynamic_cast<ShipEnnemie *>(Board[y][x]);
 			if (ptr == NULL)
@@ -166,6 +186,7 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 
 #include <cstdlib>
 #define NBDIFF 20
+#define BULLETMOVE 3
 
 void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game ) {
 	static int iter = NBDIFF;
@@ -235,13 +256,16 @@ void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &gam
 		// Debug::add_debug_nl("SHOOT x : ", game.posPlayerX);
 
 	int randomshoot = std::rand() % RANDSHOOT;
+	static int move = BULLETMOVE;
 	for (int y = 0; y < game.height; ++y) {
 		for (int x = 0; x < game.width; ++x) {
 			if (Board[y][x]){
-				all_case(Board, game, y, x, randomshoot);
+				all_case(Board, game, y, x, randomshoot, move);
 			}
 		}
 	}
+	if (move-- == 0)
+		move = BULLETMOVE;
 
 	for (int y = 0; y < game.height; ++y) {
 		for (int x = 0; x < game.width; ++x) {
