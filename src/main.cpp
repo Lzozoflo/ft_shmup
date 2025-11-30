@@ -35,7 +35,7 @@ int main(int ac, char **av) {
 	if (ac == 2) {
 		ptr = new Debug(av[1]);
 	}
-	bool is_running = RUN;
+	int is_running = RUN;
 
 
 	initscr();
@@ -75,10 +75,14 @@ int main(int ac, char **av) {
 	// Debug::add_debug_nl("Board.size(): ", Board[1].size());
 
 	while (is_running) {
-
+		int h, w;
+		getmaxyx(stdscr, h, w);
+		if (h - 4 != game.height || w - 4 != game.width){
+			is_running = 21;
+			break;
+		}
 		werase(win);                                // Effacer l'intérieur de la fenêtre
 		box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
-		// mvwprintw(stdscr, 1, 1, "comme ca");
 
 		int ch = getch();
 
@@ -102,7 +106,7 @@ int main(int ac, char **av) {
 			if (i == -42) {
 				mvwprintw(win, (game.height >> 1), (game.width >> 1), "Game over!");
 				wrefresh(win);
-				usleep(3000000);
+				usleep(GAMEOVER);
 			}
 			break;
 		}
@@ -119,6 +123,9 @@ int main(int ac, char **av) {
 	delwin(win);
 	endwin();
 	if (ptr != NULL)
-		delete ptr;
+	delete ptr;
+	if (is_running == 21){
+		std::cerr << "\nDo not change the size.\n";
+	}
 	return 0;
 }

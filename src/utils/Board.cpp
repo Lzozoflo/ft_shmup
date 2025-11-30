@@ -78,7 +78,7 @@ void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &
 }
 
 
-void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x) {
+void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, int &y, int &x, int &randomshoot) {
 
 	switch (Board[y][x]->getType())
 	{
@@ -120,6 +120,32 @@ void    all_case( std::vector<std::vector<AGameEntity *> > &Board, t_game &game,
 			break;
 		}
 		case SHIPENNEMIE:{
+			(void)randomshoot;
+			// ShipEnnemie *Shipptr = dynamic_cast<ShipEnnemie *>(Board[y][x]);
+
+			// if (Shipptr) {
+			// 	ABullet *Bulletptr = dynamic_cast<ABullet *>(Shipptr->shoot());
+			// 	// Debug::add_debug_nl("SHOOT y : ", game.posPlayerY - 1);
+			// 	// Debug::add_debug_nl("SHOOT x : ", game.posPlayerX);
+			// 	if (!Bulletptr)
+			// 		throw (-42);
+			// 	if (Board[posPlayerY - 1][posPlayerX]) {
+			// 		int hp = Board[posPlayerY - 1][posPlayerX]->getHp();
+			// 		Board[posPlayerY - 1][posPlayerX]->takeDamage(Bulletptr->getDamage());
+			// 		Bulletptr->takeDamage(hp);
+			// 		if (Bulletptr->getHp() < 1) {
+			// 			delete Bulletptr;
+			// 			Bulletptr = NULL;
+			// 		}
+			// 		if (Board[posPlayerY - 1][posPlayerX]->getHp() < 1) {
+			// 			delete Board[posPlayerY - 1][posPlayerX];
+			// 			Board[posPlayerY - 1][posPlayerX] = NULL;
+			// 		}
+			// 	}
+			// 	game.newBoard[posPlayerY - 1][posPlayerX] = Bulletptr;
+			// 	game.shot = false;
+			// 	// Debug::add_debug_nl("SHOOT type : ", (int)(game.newBoard[posPlayerY - 1][posPlayerX]->getType()));
+			// }
 
 			if (Board[y][x]->getHp() < 1){
 				game.nbEnnemie--;
@@ -161,8 +187,8 @@ void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &gam
 				Debug::add_debug_nl("Bullet dmg - hp: ", Shipptr->getHp());
 
 			} else if (value == SHIPENNEMIE || value == SHIPALLY) {
-				int dmg = Board[game.posPlayerY][game.posPlayerX]->getHp();
-				Shipptr->takeDamage(dmg);
+				// int dmg = Board[game.posPlayerY][game.posPlayerX]->getHp();
+				Shipptr->takeDamage(9000); // its over 9000! fckle sujet
 				game.nbEnnemie--;
 				Debug::add_debug_nl("ship dmg - hp: ", Shipptr->getHp());
 				Debug::add_debug_nl("ShipEnnemie destroy", game.nbEnnemie);
@@ -208,17 +234,18 @@ void    iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &gam
 
 		// Debug::add_debug_nl("SHOOT x : ", game.posPlayerX);
 
+	int randomshoot = std::rand() % RANDSHOOT;
 	for (int y = 0; y < game.height; ++y) {
 		for (int x = 0; x < game.width; ++x) {
 			if (Board[y][x]){
-				all_case(Board, game, y, x);
+				all_case(Board, game, y, x, randomshoot);
 			}
 		}
 	}
 
 	for (int y = 0; y < game.height; ++y) {
 		for (int x = 0; x < game.width; ++x) {
-			if (y == 1 && !game.newBoard[y][x] && random == x && iter-- == 0) {
+			if (y == 1 && !game.newBoard[y][x] && random == x && iter-- <= 0) {
 				iter = NBDIFF;
 				if (game.nbEnnemie >= game.maxEnnemie)
 					continue;

@@ -1,12 +1,13 @@
 #include "BulletEnnemie.hpp"
 #include "struct.hpp"
 
-BulletEnnemie::BulletEnnemie( void ) : ABullet(BULLETENNEMIE, 1, 1){}
+#include <cstdlib>
+BulletEnnemie::BulletEnnemie( void ) : ABullet(BULLETENNEMIE, 1, 1), _randshoot(std::rand() % RANDSHOOT) {}
 
-BulletEnnemie::BulletEnnemie(int damage, int hp) : ABullet(BULLETENNEMIE, hp, damage) {}
+BulletEnnemie::BulletEnnemie(const BulletEnnemie &other) : ABullet(BULLETENNEMIE, other._hp, other._damage), _randshoot(other._randshoot) {}
 
 BulletEnnemie::~BulletEnnemie( void ){}
 
 AGameEntity * BulletEnnemie::clone(void){
-    return new BulletEnnemie(this->getDamage(), this->getHp());
+    return new BulletEnnemie(*this);
 }
