@@ -13,7 +13,7 @@
 #define RANDSHOOT 50	// rand frame shoot
 #define NBDIFF 2		// vitesse de spawn
 #define BULLETMOVE 0	// rand frame bullet move
-#define GAMELIFE 100	// rand frame bullet move
+#define GAMELIFE 20	// rand frame bullet move
 
 
 

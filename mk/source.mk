@@ -43,7 +43,8 @@ SRC					:=		main.cpp		\
 
 SRC_UTILS			:=		Board.cpp		\
 							Debug.cpp		\
-							Clock.cpp
+							Clock.cpp		\
+							HpBar.cpp
 
 SRC_SHIP			:=		AShip.cpp		\
 							ShipAlly.cpp	\

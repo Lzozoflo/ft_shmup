@@ -17,6 +17,7 @@ void fill_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game )
 void print_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game, WINDOW *win);
 void delete_all_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
 void iter_board( std::vector<std::vector<AGameEntity *> > &Board, t_game &game );
+void printHpBar(WINDOW *win, int y, int x, int hp, int maxHp, int width);
 
 int main(int ac, char **av) {
 
@@ -68,7 +69,7 @@ int main(int ac, char **av) {
 
 
 	WINDOW *win = newwin(game.height, game.width, 5, 3);
-	WINDOW *status = newwin(5, game.width + 2, 0, 3);
+	WINDOW *status = newwin(5, game.width, 0, 3);
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_RED);
 	wbkgd(win, COLOR_PAIR(1));
@@ -102,6 +103,12 @@ int main(int ac, char **av) {
 		box(status, 0, 0);                         // Ecrie la bordure de la fenêtre
 		// box(win, 0, 0);                             // Ecrie la bordure de la fenêtre
 		mvwprintw(status,1 ,3, "player HP : %d ", Board[game.posPlayerY][game.posPlayerX]->getHp()); 	// Affiche le texte dans la fenêtre principale
+		/*int maxBarWidth = game.width - 15; // espace pour écrire "Game HP : "
+		int barWidth = (game.gamelife * maxBarWidth) / GAMELIFE;
+		std::string bar(barWidth, '=');
+		mvwprintw(status, 2, 3, "Game HP : %s", bar.c_str());*/
+		printHpBar(status, 2, 3, game.gamelife, GAMELIFE, game.width - 15);
+		mvwprintw(status,3 ,3, "Time : %d,%d ", clock.getMinutesSinceStart(), clock.getTimeSinceStart() % 60); 	// Affiche le texte dans la fenêtre principale
 		int ch = getch();
 
 		if (ch != -1)
